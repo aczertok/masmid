@@ -11,6 +11,8 @@ A Torah-learning app: Mishnah, Gemara, Chumash with Rashi, Nach and the Kitzur S
 
 Testers' progress is never touched by an update.
 
+To work on the app with Claude or ChatGPT, connect GitHub in each one and point it at this repository. Both read `AGENTS.md` first.
+
 ## What's where
 | Folder | What it is |
 |---|---|
