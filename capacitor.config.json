@@ -1,0 +1,7 @@
+{
+  "appId": "com.limudpath.app",
+  "appName": "Limud Path",
+  "webDir": "public",
+  "ios": { "contentInset": "always" },
+  "android": { "allowMixedContent": false }
+}

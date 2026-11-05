@@ -1,0 +1,1 @@
+function applyQfix(){for(const c of Object.values(COURSES))for(const u of c.units)for(const l of u.lessons||[])for(const s of l.steps||[]){if(s.t==="mc"&&QFIX_MC[s.q]&&QFIX_MC[s.q].length===s.opts.length)s.opts=QFIX_MC[s.q].slice();else if(s.t==="tf"&&s.a===true&&QFIX_TF[s.q]){const f=QFIX_TF[s.q];s.q=f.q;s.a=false;s.ex=f.ex}}}applyQfix();

@@ -1,0 +1,7 @@
+# Netlify builds the site from this repository on every change to main.
+[build]
+  command = "npm ci && npm run build"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"

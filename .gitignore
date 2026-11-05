@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.firebase/
+*.log
+test/*.png
+# build output (Netlify builds it); icons are kept
+public/*
+!public/icons/

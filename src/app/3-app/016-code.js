@@ -1,0 +1,25 @@
+const GB_UNITS=[
+ {key:"gb-1",lessons:GB1_LESSONS,source:GBSOURCE,sections:GB1_SECTIONS,unit:{s:"Daf 2a–3a · 3 lessons",t:"The evening Shema",he:"מאימתי"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["2a", "2b", "3a"][x],fullHe:x=>["ברכות ב.", "ברכות ב:", "ברכות ג."][x],partNames:[],revId:"gb1-chazara",testId:"gb1-siyum",revShort:"Review these dafim",testTitle:"Berachos 2a–3a test",
+  siyumHTML:`<div class="hadran">חזק!</div><p class="sub">You've finished Berachos 2a–3a.</p>`,doneSmall:"Section complete",doneTitle:"You finished Berachos 2a–3a",unitWord:"section"},
+ {key:"gb-2",lessons:GB2_LESSONS,source:GBSOURCE,sections:GB2_SECTIONS,unit:{s:"Daf 3b–4b · 4 lessons",t:"Midnight",he:"חצות לילה"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["3b", "4a", "4b"][x],fullHe:x=>["ברכות ג:", "ברכות ד.", "ברכות ד:"][x],partNames:[],revId:"gb2-chazara",testId:"gb2-siyum",revShort:"Review these dafim",testTitle:"Berachos 3b–4b test",
+  siyumHTML:`<div class="hadran">חזק!</div><p class="sub">You've finished Berachos 3b–4b.</p>`,doneSmall:"Section complete",doneTitle:"You finished Berachos 3b–4b",unitWord:"section"},
+ {key:"gb-3",lessons:GB3_LESSONS,source:GBSOURCE,sections:GB3_SECTIONS,unit:{s:"Daf 5a–6a · 4 lessons",t:"Shema at bedtime",he:"על מטתו"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["5a", "5b", "6a"][x],fullHe:x=>["ברכות ה.", "ברכות ה:", "ברכות ו."][x],partNames:[],revId:"gb3-chazara",testId:"gb3-siyum",revShort:"Review these dafim",testTitle:"Berachos 5a–6a test",
+  siyumHTML:`<div class="hadran">חזק!</div><p class="sub">You've finished Berachos 5a–6a.</p>`,doneSmall:"Section complete",doneTitle:"You finished Berachos 5a–6a",unitWord:"section"},
+ {key:"gb-4",lessons:GB4_LESSONS,source:GBSOURCE,sections:GB4_SECTIONS,unit:{s:"Daf 6b–8a · 6 lessons",t:"The shul",he:"בית הכנסת"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["6b", "7a", "7b", "8a"][x],fullHe:x=>["ברכות ו:", "ברכות ז.", "ברכות ז:", "ברכות ח."][x],partNames:[],revId:"gb4-chazara",testId:"gb4-siyum",revShort:"Review these dafim",testTitle:"Berachos 6b–8a test",
+  siyumHTML:`<div class="hadran">חזק!</div><p class="sub">You've finished Berachos 6b–8a.</p>`,doneSmall:"Section complete",doneTitle:"You finished Berachos 6b–8a",unitWord:"section"},
+ {key:"gb-5",lessons:GB5_LESSONS,source:GBSOURCE,sections:GB5_SECTIONS,unit:{s:"Daf 8b–10a · 6 lessons",t:"Until dawn",he:"עד שיעלה עמוד השחר"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["8b", "9a", "9b", "10a"][x],fullHe:x=>["ברכות ח:", "ברכות ט.", "ברכות ט:", "ברכות י."][x],partNames:[],revId:"gb5-chazara",testId:"gb5-siyum",revShort:"Review these dafim",testTitle:"Berachos 8b–10a test",
+  siyumHTML:`<div class="hadran">חזק!</div><p class="sub">You've finished Berachos 8b–10a.</p>`,doneSmall:"Section complete",doneTitle:"You finished Berachos 8b–10a",unitWord:"section"},
+ {key:"gb-6",lessons:GB6_LESSONS,source:GBSOURCE,sections:GB6_SECTIONS,unit:{s:"Daf 10b–11a · 3 lessons",t:"Beis Shammai and Beis Hillel",he:"בית שמאי ובית הלל"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["10b", "11a"][x],fullHe:x=>["ברכות י:", "ברכות יא."][x],partNames:[],revId:"gb6-chazara",testId:"gb6-siyum",revShort:"Review these dafim",testTitle:"Berachos 10b–11a test",
+  siyumHTML:`<div class="hadran">חזק!</div><p class="sub">You've finished Berachos 10b–11a.</p>`,doneSmall:"Section complete",doneTitle:"You finished Berachos 10b–11a",unitWord:"section"},
+ {key:"gb-7",lessons:GB7_LESSONS,source:GBSOURCE,sections:GB7_SECTIONS,unit:{s:"Daf 11b–13a · 4 lessons",t:"The brachos of Shema",he:"ברכות קריאת שמע"},masteryBy:"lesson",
+  ref:x=>"Berachos "+["11b", "12a", "12b", "13a"][x],fullHe:x=>["ברכות יא:", "ברכות יב.", "ברכות יב:", "ברכות יג."][x],partNames:[],revId:"gb7-chazara",testId:"gb7-siyum",revShort:"Review these dafim",testTitle:"Siyum Perek",
+  siyumHTML:`<div class="hadran">הדרן עלך<br>פרק מאימתי</div><p class="sub">You've learned the whole first perek of Gemara Berachos.</p>`,doneSmall:"Perek complete",doneTitle:"Hadran alach Meimasai",unitWord:"section"},
+];
+/* Parashas Noach and Lech Lecha (Bereishis 6:9–17:27) — Hebrew: Tanach with Nikkud (PD); English: Metsudah Chumash and Metsudah Rashi (CC-BY), a few verses worded modestly. ה' and אלקים are written for the Names. */
+const CSOURCE2={"ref":"Genesis 6:9-17:27","url":"https://www.sefaria.org/Genesis.6.9","he":{"title":"Tanach with Nikkud; Rashi: Metsudah Rashi Chumash","license":"Public Domain / CC-BY"},"en":{"title":"Metsudah Chumash and Metsudah Rashi, Metsudah Publications, 2009 (a few verses in ch. 9, 16 and 17 worded modestly)","license":"CC-BY","licenseUrl":"https://creativecommons.org/licenses/by/3.0/"}};
