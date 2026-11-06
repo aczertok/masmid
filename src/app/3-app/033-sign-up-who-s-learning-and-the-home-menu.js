@@ -74,7 +74,7 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
  <section class="masmid-coach" aria-label="Your learning buddy">
   <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
   <div class="masmid-coach-copy">
-   <span class="masmid-coach-label">MEET NER · YOUR LEARNING BUDDY</span>
+   <span class="masmid-coach-label">MEET SIFRI · YOUR LEARNING BUDDY</span>
    <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
    <p>${pct>=1?"Today's goal is complete. Keep exploring!":tx>0?"Just "+Math.max(0,goal-tx)+" more XP to reach your daily goal.":"One little lesson is a great place to start."}</p>
    <div class="masmid-quest"><span aria-hidden="true">✦</span><div><b>Today's mission</b><small>${pct>=1?"Mission complete!":Math.max(0,goal-tx)+" XP until your goal"}</small></div><span class="masmid-quest-pct">${Math.round(pct*100)}%</span></div>
