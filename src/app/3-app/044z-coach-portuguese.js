@@ -1,6 +1,6 @@
 /* Kid-friendly home coaching translations. Loaded after the existing PT_UI dictionary. */
 Object.assign(PT_UI, {
- "MEET NER · YOUR LEARNING BUDDY": "CONHEÇA NER · SEU COMPANHEIRO DE ESTUDOS",
+ "MEET SIFRI · YOUR LEARNING BUDDY": "CONHEÇA SIFRI · SEU COMPANHEIRO DE ESTUDOS",
  "Yasher koach! You did it!": "Yasher koach! Você conseguiu!",
  "You're on a roll!": "Você está indo muito bem!",
  "Ready for a Torah adventure?": "Pronto para uma aventura na Torá?",
@@ -14,9 +14,9 @@ Object.assign(PT_UI, {
  "Daily learning goal": "Meta diária de estudos"
 });
 
-/* Ner interaction messages */
+/* Sifri interaction messages */
 Object.assign(PT_UI,{
- "Tap Ner for encouragement":"Toque no Ner para receber incentivo",
+ "Tap Sifri for encouragement":"Toque no Sifri para receber incentivo",
  "Yasher koach! Every little step counts.":"Yasher koach! Cada pequeno passo conta.",
  "Ready for a little Torah challenge?":"Pronto para um pequeno desafio de Torá?",
  "You and I make a great learning team!":"Nós dois formamos uma ótima equipe de estudos!",
@@ -33,8 +33,8 @@ Object.assign(PT_UI,{
 
 /* Persistent companion */
 Object.assign(PT_UI,{
- "Ner learning companion":"Ner, companheiro de estudos",
- "Give Ner a high five":"Dê um toca aqui para o Ner",
+ "Sifri learning companion":"Sifri, companheiro de estudos",
+ "Give Sifri a high five":"Dê um toca aqui para o Sifri",
  "You're making progress!":"Você está avançando!",
  "Yasher koach! That was terrific!":"Yasher koach! Você foi incrível!",
  "Almost! Let's learn from this one.":"Quase! Vamos aprender com essa resposta.",
