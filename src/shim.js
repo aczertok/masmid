@@ -118,7 +118,8 @@ const nice = e => {
     "auth/weak-password": "Please choose a password of at least 6 characters.", "auth/email-already-in-use": "There's already an account with that email. Try signing in.",
     "auth/invalid-credential": "The email or password is not right.", "auth/wrong-password": "The email or password is not right.",
     "auth/user-not-found": "There's no account with that email yet. Create one below.", "auth/too-many-requests": "Too many tries. Please wait a minute and try again.",
-    "auth/popup-closed-by-user": "Google sign-in was closed before it finished.", "auth/network-request-failed": "No internet connection." })[c] || "Something went wrong. Please try again.";
+    "auth/popup-closed-by-user": "Google sign-in was closed before it finished.", "auth/network-request-failed": "No internet connection.",
+    "auth/unauthorized-domain": "Google sign-in only works on masmid.netlify.app. On this test link, sign in with your email and password." })[c] || "Something went wrong. Please try again.";
 };
 window.LimudAuth = {
   ready, get user() { return current; },
