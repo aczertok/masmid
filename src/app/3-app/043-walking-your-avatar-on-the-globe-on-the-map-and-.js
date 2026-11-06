@@ -68,14 +68,18 @@ function mapWalk(o){const {svg,box,M,placeOf,setView,getMV,enter,itemPos,startKe
  show();raf=requestAnimationFrame(tick);
  return {stop,toMe:()=>{follow=1},pos:()=>p}}
 
+/* ---------- learning buddies: pretend learners so the room is never empty ---------- */
+const BM_NAMES={man:["Yaakov","Shmuel","Dovid","Eliezer","Chaim","Moshe"],boy:["Yossi","Dovi","Shimmy","Avi","Mendy","Ari"],woman:["Rivka","Leah","Chana","Miriam","Esther","Sarah"],girl:["Chani","Malky","Shira","Tzivi","Rochel","Devorah"]};
+function bmBuddies(it,have){const want=Math.max(0,6-have);if(!want)return [];const names=BM_NAMES[profile()||"man"]||BM_NAMES.man;let h=0;for(const ch of String(it&&(it.en||it.id)||""))h=(h*31+ch.charCodeAt(0))%9973;
+ return Array.from({length:want},(_,i)=>{const sd=h+i*37+11;return {npc:1,online:true,card:{nick:names[(h+i)%names.length],av:npcLook(sd),lv:1+sd%9}}})}
 /* ---------- inside: a beis medrash seen from just behind your avatar ---------- */
 let BM=null;
 function beisMedrash(o){if(BM)BM.close();
- const W=roomWords(),it=o.it,ppl=(o.ppl||[]).slice(0,32);
+ const W=roomWords(),it=o.it,real=(o.ppl||[]).slice(0,32),ppl=real.concat(bmBuddies(it,real.length));
  const lay=$("#layer");lay.innerHTML=`<div class="bmv" role="dialog" aria-modal="true" aria-label="${esc(it.en)} ${esc(W.room)}">
   <canvas id="bmc" class="bmc"></canvas>
-  <div class="bm-top"><button class="iconbtn" id="bmx" aria-label="Back to the map">←</button><div class="bm-t"><b><span class="he">${it.he}</span> ${esc(it.en)}</b><small>${esc(W.room)} · ${ppl.length?`${ppl.length} learning here${ppl.some(p=>p.online)?` · ${ppl.filter(p=>p.online).length} now`:""}`:"No one else here yet"}</small></div></div>
-  ${ppl.length?"":`<div class="bm-empty" id="bmempty">No one else is learning ${esc(it.en)} right now. Take a seat and start: others will see you here.</div>`}
+  <div class="bm-top"><button class="iconbtn" id="bmx" aria-label="Back to the map">←</button><div class="bm-t"><b><span class="he">${it.he}</span> ${esc(it.en)}</b><small>${esc(W.room)} · ${real.length?`${real.length} learning here${real.some(p=>p.online)?` · ${real.filter(p=>p.online).length} now`:""}`:"Learning buddies are here"}</small></div></div>
+  ${real.length?"":`<div class="bm-empty" id="bmempty"><span>No one else is learning right now, so your learning buddies saved you a seat.</span> <span>When others learn here, you'll see them too.</span></div>`}
   <div class="bm-near" id="bmnear" hidden></div>
   <div class="bm-bot"><button class="btn" id="bmlearn">📖 Learn ${esc(it.en)}</button></div></div>`;
  document.body.style.overflow="hidden";
@@ -93,8 +97,10 @@ function beisMedrash(o){if(BM)BM.close();
  const meImg=avImg(Object.assign(myAvatar(),{back:1})),meFront=avImg(myAvatar());
  const P={x:0,z:1.8,a:0},CAM={d:2.6,h:2.05,p:.2};let tgt=null,t0=performance.now(),walkT=0;
  /* books on the side walls, windows, lamps */
- let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;const BOOK=["#7A2E3A","#2B3F6B","#3E5B3A","#6B4A2B","#1F2433","#8A6A2A","#5A2E5A"];
- const books=[];[-1,1].forEach(side=>{for(let sh=0;sh<5;sh++){let z=1;while(z<RD-3.2){const w=.08+rnd()*.1;if(rnd()>.06)books.push({side,z0:z,z1:z+w,y0:.15+sh*.5,y1:.15+sh*.5+.34+rnd()*.1,c:BOOK[Math.floor(rnd()*BOOK.length)]});z+=w+.004}}});
+ let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;const BOOK=["#5A1E24","#1C2A4A","#15161B","#2E3B2A","#4A2E1E","#6B2430","#22314F","#3A1A1E"];
+ /* seforim come in sets: a run of matching spines, gold bands and a title plate */
+ const books=[];[-1,1].forEach(side=>{for(let sh=0;sh<5;sh++){let z=1;while(z<RD-3.2){const n=2+Math.floor(rnd()*11),c=BOOK[Math.floor(rnd()*BOOK.length)],h=.33+rnd()*.12,w=.075+rnd()*.045,gold=rnd()<.8?"#C9A04A":"#D8CFB8";
+   for(let i=0;i<n&&z<RD-3.2;i++){books.push({side,z0:z,z1:z+w,y0:.15+sh*.5,y1:.15+sh*.5+h,c,gold});z+=w+.006}z+=rnd()<.25?.06+rnd()*.1:.012}}});
  const lamps=[];for(let z=3;z<RD;z+=4)[-2.5,2.5].forEach(x=>lamps.push({x,z,y:3.2}));
  /* ---- projection ---- */
  let Wd=0,Hd=0,F=0,dpr=1;const resize=()=>{dpr=Math.min(2,devicePixelRatio||1);Wd=cv.clientWidth;Hd=cv.clientHeight;cv.width=Wd*dpr;cv.height=Hd*dpr;F=Math.max(Wd*.85,Hd*.42)};resize();addEventListener("resize",resize);
@@ -130,12 +136,26 @@ function beisMedrash(o){if(BM)BM.close();
   for(let z=3;z<RD-2;z+=4)[-1,1].forEach(s=>{const x=s*(RW-.01);poly([[x,2.85,z],[x,2.85,z+1.6],[x,3.85,z+1.6],[x,3.85,z]],"#BFE3FF","#8A6A3A");line([x,3.35,z],[x,3.35,z+1.6],"#8A6A3A",1.5)});
   /* bookcases */
   [-1,1].forEach(s=>{const x=s*(RW-.02);poly([[x,0,.8],[x,0,RD-3],[x,2.65,RD-3],[x,2.65,.8]],"#6B4423")});
-  for(const b of books){const x=b.side*(RW-.05);poly([[x,b.y0,b.z0],[x,b.y0,b.z1],[x,b.y1,b.z1],[x,b.y1,b.z0]],b.c)}
+  for(const b of books){const x=b.side*(RW-.05);poly([[x,b.y0,b.z0],[x,b.y0,b.z1],[x,b.y1,b.z1],[x,b.y1,b.z0]],b.c,"rgba(0,0,0,.35)");
+   const zc=toCam(x,b.y0,(b.z0+b.z1)/2)[2];if(zc>NEAR&&zc<9){const z0=b.z0+.012,z1=b.z1-.012,xi=b.side*(RW-.052);
+    line([xi,b.y0+.04,z0],[xi,b.y0+.04,z1],b.gold,1.2);line([xi,b.y1-.04,z0],[xi,b.y1-.04,z1],b.gold,1.2);line([xi,b.y1-.065,z0],[xi,b.y1-.065,z1],b.gold,.8);
+    poly([[xi,b.y0+.13,z0+.006],[xi,b.y0+.13,z1-.006],[xi,b.y0+.2,z1-.006],[xi,b.y0+.2,z0+.006]],b.gold)}}
   [-1,1].forEach(s=>{const x=s*(RW-.06);for(let k=0;k<6;k++)line([x,.12+k*.5,.8],[x,.12+k*.5,RD-3],"#4A2E1A",2)});
   /* aron kodesh */
   poly([[-1.6,.3,RD-.02],[1.6,.3,RD-.02],[1.6,3.3,RD-.02],[-1.6,3.3,RD-.02]],"#8A5A2B");poly([[-1.3,.55,RD-.04],[1.3,.55,RD-.04],[1.3,3,RD-.04],[-1.3,3,RD-.04]],"#7A1F2E");
-  poly([[-.5,3.35,RD-.03],[0,3.9,RD-.03],[.5,3.35,RD-.03]],"#E3B84A");line([0,.8,RD-.05],[0,2.7,RD-.05],"#E3B84A",2);line([-.9,1.75,RD-.05],[.9,1.75,RD-.05],"#E3B84A",2);
-  { const v=toCam(0,3.55,RD-.4);if(v[2]>.3){const [sx,sy]=scr(v),r=F/v[2]*.12;const g=ctx.createRadialGradient(sx,sy,0,sx,sy,r*3);g.addColorStop(0,"rgba(255,200,90,.9)");g.addColorStop(1,"rgba(255,200,90,0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(sx,sy,r*3,0,7);ctx.fill()}}
+  { const zq=RD-.05;/* gold border and fringe on the paroches */
+   [[[-1.18,.68],[1.18,.68]],[[-1.18,2.88],[1.18,2.88]],[[-1.18,.68],[-1.18,2.88]],[[1.18,.68],[1.18,2.88]]].forEach(([a,b])=>line([a[0],a[1],zq],[b[0],b[1],zq],"#E3B84A",2));
+   for(let x=-1.25;x<=1.25;x+=.07)line([x,.58,zq],[x,.5,zq],"#E3B84A",1);
+   /* the luchos on the paroches, with the first letters of the Aseres Hadibros */
+   const lz=RD-.06,TAB=[{cx:.47,ls:"אבגדה"},{cx:-.47,ls:"וזחטי"}];
+   TAB.forEach(t=>{const w=.38,y0=.95,y1=2.15,pts=[[t.cx-w,y0,lz],[t.cx+w,y0,lz],[t.cx+w,y1,lz]];for(let i=0;i<=10;i++){const a=i/10*Math.PI;pts.push([t.cx+Math.cos(a)*w,y1+Math.sin(a)*w*.8,lz])}poly(pts,"#F3ECDA","#E3B84A");
+    const v0=toCam(t.cx,y0,lz);if(v0[2]<.3)return;const fs=F/v0[2]*.2;if(fs<3)return;ctx.fillStyle="#2A2240";ctx.font=`700 ${fs}px "Frank Ruhl Libre","Noto Serif Hebrew",serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+    [...t.ls].forEach((ch,i)=>{const [sx,sy]=scr(toCam(t.cx,2.25-i*.27,lz));ctx.fillText(ch,sx,sy)})});
+   /* keser Torah on top of the aron */
+   const kz=RD-.03;poly([[-.34,3.36,kz],[.34,3.36,kz],[.42,3.72,kz],[.2,3.56,kz],[0,3.8,kz],[-.2,3.56,kz],[-.42,3.72,kz]],"#E3B84A");
+   [[-.42,3.74],[0,3.82],[.42,3.74]].forEach(([x,y])=>{const v=toCam(x,y,kz);if(v[2]>.3){const [sx,sy]=scr(v);ctx.fillStyle="#E3B84A";ctx.beginPath();ctx.arc(sx,sy,Math.max(1.2,F/v[2]*.03),0,7);ctx.fill()}});
+   /* ner tamid */
+   line([0,RH,RD-.7],[0,3.05,RD-.7],"#3A2A1A",1.2);const v=toCam(0,2.98,RD-.7);if(v[2]>.3){const [sx,sy]=scr(v),r=F/v[2]*.07;const g=ctx.createRadialGradient(sx,sy,0,sx,sy,r*3);g.addColorStop(0,"rgba(255,90,60,.95)");g.addColorStop(.3,"rgba(255,170,80,.5)");g.addColorStop(1,"rgba(255,200,90,0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(sx,sy,r*3,0,7);ctx.fill()}}
   /* furniture and people, far to near */
   const L=[];
   tables.forEach(b=>L.push({z:toCam(b.x,.4,b.z)[2],f:()=>{box3(b,"#9A6A3A","#6B4423","#7A4E2A");
@@ -147,7 +167,7 @@ function beisMedrash(o){if(BM)BM.close();
   sitters.forEach((s,i)=>L.push({z:toCam(s.s.x,1,s.s.z)[2],f:()=>{const behind=(s.s.f>0)===((s.s.z-C.z)*1>0)&&Math.abs(s.s.z-C.z)>.2;
    /* a seated learner: upper body above the bench, swaying while they learn */
    const sw=s.p.online?Math.sin(tt*2.2+s.ph):Math.sin(tt*.6+s.ph)*.25;const r=sprite(behind?s.back:s.img,s.s.x,s.s.z,1.5,{y0:-.1,crop:.6,sway:sw,alpha:s.p.online?1:.85});
-   if(r)hits.push({...r,p:s.p});tag(s.s.x,1.3,s.s.z,(s.p.card.nick||"Learner").split(" ")[0],s.p.online)}}));
+   if(r)hits.push({...r,p:s.p});tag(s.s.x,1.3,s.s.z,(s.p.card.nick||"Learner").split(" ")[0],s.p.online&&!s.p.npc)}}));
   L.push({z:toCam(P.x,1,P.z)[2],f:()=>{const bob=Math.abs(Math.sin(walkT))*.06;sprite(meImg,P.x,P.z,1.78,{y0:bob})}});
   L.sort((a,b)=>b.z-a.z).forEach(d=>d.f());
   /* tap target on the floor */
@@ -165,8 +185,8 @@ function beisMedrash(o){if(BM)BM.close();
   /* someone close by? */
   let n=null,bd=2.1;sitters.forEach(s=>{const d=Math.hypot(s.s.x-P.x,s.s.z-P.z);if(d<bd){bd=d;n=s}});
   if(n!==near){near=n;if(!n)nearEl.hidden=true;else{const c=n.p.card;nearEl.hidden=false;
-   nearEl.innerHTML=`<div class="bm-nav">${avatarSVG(Object.assign({},c.av||{},{base:profile()||"man"}),"","-30 -108 60 112")}</div><div class="bm-nt"><b>${esc(c.nick||"Learner")}</b><small>${n.p.online?"🟢 Learning now":esc(socAgo(n.p.ts||0))} · Level ${c.lv||1}${c.streak?" · "+esc(c.streak):""}</small></div><button class="btn sm" id="bm5">✋</button><button class="btn ghost sm" id="bmsee">See</button>`;
-   $("#bm5").onclick=()=>socFive(n.p);$("#bmsee").onclick=()=>see(n.p)}}};
+   nearEl.innerHTML=n.p.npc?`<div class="bm-nav">${avatarSVG(Object.assign({},c.av||{},{base:profile()||"man"}),"","-30 -108 60 112")}</div><div class="bm-nt"><b>${esc(c.nick)}</b><small>Learning buddy</small></div>`:`<div class="bm-nav">${avatarSVG(Object.assign({},c.av||{},{base:profile()||"man"}),"","-30 -108 60 112")}</div><div class="bm-nt"><b>${esc(c.nick||"Learner")}</b><small>${n.p.online?"🟢 Learning now":esc(socAgo(n.p.ts||0))} · Level ${c.lv||1}${c.streak?" · "+esc(c.streak):""}</small></div><button class="btn sm" id="bm5">✋</button><button class="btn ghost sm" id="bmsee">See</button>`;
+   if(!n.p.npc){$("#bm5").onclick=()=>socFive(n.p);$("#bmsee").onclick=()=>see(n.p)}}}};
  const see=p=>{const keep={...P};close();SOC.backLabel="Back to the "+W.room.toLowerCase();learnerSheet(p,{back:()=>{beisMedrash(Object.assign({},o,{start:keep}))}})};
  if(o.start)Object.assign(P,o.start);
  /* drag to look around, tap to walk or to meet someone */
@@ -174,7 +194,7 @@ function beisMedrash(o){if(BM)BM.close();
  cv.addEventListener("pointermove",e=>{if(!pd||e.pointerId!==pd.id)return;const dx=e.clientX-pd.x;pd.m=Math.max(pd.m,Math.abs(dx)+Math.abs(e.clientY-pd.y));if(pd.m>8){P.a=pd.a+dx/Wd*3.2;tgt=null}});
  cv.addEventListener("pointerup",e=>{if(!pd)return;const tap=pd.m<=8;pd=null;if(!tap)return;const r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
   const h=hits.slice().sort((a,b)=>a.z-b.z).find(q=>x>=q.x&&x<=q.x+q.w&&y>=q.y&&y<=q.y+q.h);
-  if(h&&h.p){see(h.p);return}if(h&&h.teacher){toast(`${W.teach}: Welcome! Tap "Learn ${it.en}" to start.`);return}
+  if(h&&h.p&&h.p.npc){toast((typeof T==="function"?T:x=>x)("Come learn with us!"));return}if(h&&h.p){see(h.p);return}if(h&&h.teacher){toast(`${W.teach}: Welcome! Tap "Learn ${it.en}" to start.`);return}
   /* the floor point under the finger */
   const ny=-(y-Hd*.46)/F,nx=(x-Wd/2)/F;const dy=ny*C.cp-1*C.sp,dz=ny*C.sp+1*C.cp;if(dy>=-.01)return;const k=-C.y/dy;const xc=nx*k,zc=dz*k;
   const wx=C.x+xc*C.ca+zc*C.sa,wz=C.z-xc*C.sa+zc*C.ca;tgt={x:Math.max(-RW+.4,Math.min(RW-.4,wx)),z:Math.max(.4,Math.min(RD-1.2,wz))}});
