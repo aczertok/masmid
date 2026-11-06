@@ -121,7 +121,7 @@ function resolve(s,ok,isMatch){cur.locked=true;document.onkeydown=null;const fir
  const f=$("#lfoot");f.className="lfoot wrap "+(ok?"ok":"bad");
  const answer=s.t==="tf"?(s.a?"True":"False"):s.t==="order"?s.tiles.join(" "):s.t==="match"?"":s.opts[s.a];
  const praise=["Yasher koach!","Excellent!","Right!","Well done!"][Math.floor(Math.random()*4)];
- f.innerHTML=`<div class="fbrow">${ner(ok?"cheer":"think")}<div class="fb" style="flex:1;min-width:0"><b>${ok?I.check:I.x}${ok?praise:isMatch?"Matched, with a few slips":"Not quite"}</b>${!ok&&answer?`<p>Answer: ${txt(answer)}</p>`:""}${s.ex?`<p>${txt(s.ex)}</p>`:""}</div></div><button class="btn ${ok?"green":"red"} block" id="next">Continue</button>`;
+ f.innerHTML=`<div class="fbrow">${nerButton("feedback",ok?"cheer":"think")}<div class="fb" style="flex:1;min-width:0"><b>${ok?I.check:I.x}${ok?praise:isMatch?"Matched, with a few slips":"Not quite"}</b>${!ok&&answer?`<p>Answer: ${txt(answer)}</p>`:""}${s.ex?`<p>${txt(s.ex)}</p>`:""}</div></div><button class="btn ${ok?"green":"red"} block" id="next">Continue</button>`;
  $("#next").focus();
  $("#next").onclick=()=>{const done=R.queue.shift();if(ok||isMatch){R.doneCount++}else if(R.kind!=="test"){R.queue.push({...done})}else R.doneCount++;showStep()}}
 
