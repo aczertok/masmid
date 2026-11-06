@@ -561,3 +561,26 @@ input[type=text],input[type=email],input[type=password]{border:2px solid var(--l
 @keyframes nerWave{0%,100%{transform:rotate(0)}20%{transform:rotate(-15deg)}40%{transform:rotate(14deg)}60%{transform:rotate(-13deg)}80%{transform:rotate(8deg)}}
 @media(max-width:600px){.ner-companion{top:calc(env(safe-area-inset-top,0px) + 61px);right:2px;width:65px}.ner-companion-button{width:63px;height:76px}.ner-companion-meter{width:47px}.ner-companion-bubble{right:56px;max-width:175px;font-size:11px;padding:7px}.lbody{scroll-padding-top:60px}}
 @media(prefers-reduced-motion:reduce){.ner-companion-character,.ner-companion-character .ner .flame,.ner-companion-spark,.ner-perform-cheer .ner-companion-character,.ner-perform-think .ner-companion-character,.ner-perform-highfive .ner-companion-character,.ner-perform-wave .ner-companion-character{animation:none!important}.ner-companion-meter span{transition:none}}
+
+/* Home Ner speech remains within the card and wraps on narrow screens.
+   The earlier absolutely positioned balloon was clipped by the card's overflow. */
+.masmid-coach-copy>.ner-response{
+ position:relative;
+ inset:auto;
+ left:auto;
+ right:auto;
+ bottom:auto;
+ transform:none;
+ display:block;
+ box-sizing:border-box;
+ width:100%;
+ min-width:0;
+ max-width:100%;
+ margin-top:10px;
+ padding:9px 11px;
+ font-size:12px;
+ overflow-wrap:anywhere;
+ white-space:normal;
+ text-align:left;
+}
+.masmid-coach-copy>.ner-response:empty{display:none}
