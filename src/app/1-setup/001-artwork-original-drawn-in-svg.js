@@ -4,45 +4,61 @@ function starField(n,w,h,seed){let r=seed||7;const rnd=()=>(r=(r*9301+49297)%233
  for(let i=0;i<n;i++){const x=rnd()*w,y=rnd()*h,z=rnd()*1.5+.5;s+=`<circle class="tw" style="animation-delay:${(rnd()*3).toFixed(2)}s" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${z.toFixed(1)}" fill="#fff"/>`}return s}
 function sky(id,a,b){return `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`}
 
-/* Ner the Lantern Buddy: vector artwork, shared by home, lessons and tests. */
-function ner(mood="happy",cls=""){
- const id=uid("lantern"),cheer=mood==="cheer",think=mood==="think",sad=mood==="sad",rest=mood==="rest";
- const eyes=rest?'<path d="M36 65q7 6 13 0M55 65q7 6 13 0" fill="none" stroke="#50303A" stroke-width="2.7" stroke-linecap="round"/>':
- '<g class="ner-eyes"><ellipse cx="43" cy="62" rx="8" ry="10" fill="#FFFDF3"/><ellipse cx="62" cy="62" rx="8" ry="10" fill="#FFFDF3"/><ellipse cx="'+(think?45:44)+'" cy="'+(think?60:64)+'" rx="4.5" ry="6.3" fill="#352536"/><ellipse cx="'+(think?64:63)+'" cy="'+(think?60:64)+'" rx="4.5" ry="6.3" fill="#352536"/><circle cx="'+(think?46:45)+'" cy="'+(think?57:61)+'" r="2.1" fill="#fff"/><circle cx="'+(think?65:64)+'" cy="'+(think?57:61)+'" r="2.1" fill="#fff"/></g>';
- const mouth=cheer?'<path d="M44 77q9 16 18 0z" fill="#713744"/><path d="M49 84q5-3 9 0" fill="none" stroke="#F59BA4" stroke-width="2.4"/>':
- think?'<ellipse cx="54" cy="80" rx="3.5" ry="4" fill="#713744"/>':
- sad?'<path d="M46 82q7-6 14 0" stroke="#713744" stroke-width="2.7" fill="none" stroke-linecap="round"/>':
- '<path d="M44 76q9 11 18 0" stroke="#713744" stroke-width="3" fill="none" stroke-linecap="round"/>';
- const brows=think?'<path d="M35 50q7-7 13-3M56 47q7-6 12-3"/>':
- sad?'<path d="M36 50l12 3M56 53l12-3"/>':
- '<path d="M36 50q6-4 12 0M56 50q6-4 12 0"/>';
- const arms=cheer?'<path d="M26 65Q14 54 13 45M77 65Q89 54 89 43" stroke="#A96528" stroke-width="6" stroke-linecap="round" fill="none"/><g fill="#FFFDF7" stroke="#AF9D80" stroke-width="1.4"><ellipse cx="13" cy="44" rx="6.2" ry="7"/><ellipse cx="89" cy="42" rx="6.2" ry="7"/></g><path d="M8 42l-3-7M14 39l-1-8M19 42l3-7M84 40l-3-7M90 37l0-7M95 40l3-7" stroke="#FFFDF7" stroke-width="3.5" stroke-linecap="round"/>':
- '<path d="M26 66Q18 75 12 69M77 66Q87 74 91 66" stroke="#A96528" stroke-width="6" stroke-linecap="round" fill="none"/><g fill="#FFFDF7" stroke="#AF9D80" stroke-width="1.4"><ellipse cx="12" cy="69" rx="7" ry="5.5"/><ellipse cx="91" cy="66" rx="7" ry="5.5"/></g><path d="M8 67l-4-4M96 64l4-4" stroke="#FFFDF7" stroke-width="4" stroke-linecap="round"/>';
- return '<svg class="ner ner-lantern ner-mood-'+mood+' '+cls+'" viewBox="0 0 104 124" aria-hidden="true">'+
- '<defs><radialGradient id="'+id+'gl"><stop offset="0" stop-color="#FFE99D" stop-opacity=".7"/><stop offset="1" stop-color="#FFD347" stop-opacity="0"/></radialGradient>'+
- '<linearGradient id="'+id+'gold" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FFF8B7"/><stop offset=".4" stop-color="#FFDA58"/><stop offset="1" stop-color="#EFA028"/></linearGradient>'+
- '<linearGradient id="'+id+'hat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5697E7"/><stop offset="1" stop-color="#15336C"/></linearGradient></defs>'+
- '<ellipse cx="52" cy="65" rx="52" ry="56" fill="url(#'+id+'gl)" class="ner-glow"/>'+
- (cheer?'<g class="ner-sparkles" fill="#FFD247"><path d="M7 22l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path d="M94 19l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></g>':'')+
- (rest?'<text x="80" y="18" fill="#244D93" font-size="15" font-weight="800">z</text>':'')+
- '<g class="ner-feet"><path d="M40 93L38 108M65 93L67 108" stroke="#8B5328" stroke-width="7" stroke-linecap="round"/>'+
- '<path d="M19 111q6-10 17-7l10 7q3 7-4 9H22q-8-1-3-9M58 111q10-11 21-6l7 9q0 6-8 6H60q-7-3-2-9" fill="#273F7D" stroke="#15284F" stroke-width="2"/>'+
- '<path d="M23 115h19M62 115h20" stroke="#B6D0ED" stroke-width="2.3" stroke-linecap="round"/></g>'+
- arms+
- '<path d="M75 44q19-4 20 14v26q-1 10-17 10l-5-9z" fill="#275CB0" stroke="#153B7B" stroke-width="2.8"/>'+
- '<path d="M80 60q10-1 11 5v12q-4 4-11 2" fill="none" stroke="#86B2EB" stroke-width="2"/>'+
- '<g class="ner-body"><path d="M26 40q0-10 12-10h28q15 0 15 14v45q-1 12-14 12H38Q25 99 25 88z" fill="#AE7029" stroke="#744219" stroke-width="2.5"/>'+
- '<path d="M31 41q1-7 11-7h24q10 0 10 10v42q0 9-11 9H40q-9 0-9-9z" fill="url(#'+id+'gold)"/>'+
- '<path d="M36 40q6-4 17-4Q39 53 36 77q-7-18 0-37" fill="#FFF8C6" opacity=".54"/>'+
- '<ellipse cx="36" cy="75" rx="7" ry="4" fill="#F48D82" opacity=".47"/><ellipse cx="70" cy="75" rx="7" ry="4" fill="#F48D82" opacity=".47"/>'+
- '<g stroke="#5B3E33" stroke-width="2.6" fill="none" stroke-linecap="round">'+brows+'</g>'+eyes+mouth+
- '<path d="M26 89q4 12 14 12h28q11-1 14-12l-5 14q-25 6-47 0z" fill="#C68937" stroke="#915D2B" stroke-width="1.7"/>'+
- '<path d="M32 98h41" stroke="#FFE3A1" stroke-width="2.3" stroke-linecap="round"/></g>'+
- '<g class="ner-hat"><path d="M42 20Q40 3 52 3t12 17" fill="none" stroke="#B57D38" stroke-width="6" stroke-linecap="round"/>'+
- '<path d="M40 20q12-9 25 0l7 15H33z" fill="url(#'+id+'hat)" stroke="#173665" stroke-width="2.6"/>'+
- '<path d="M29 33q23-8 47 0q4 6-3 7H32q-8-3-3-7" fill="#316AB5" stroke="#153D77" stroke-width="2"/>'+
- '<path d="M41 25q9-4 19-1" fill="none" stroke="#C3DEFF" stroke-width="2.2" stroke-linecap="round"/></g></svg>';
+/* Sifri (ספרי): Masmid's original blue-and-gold Sefer buddy.
+   ner(mood, cls) remains as a compatibility alias for existing lesson code. */
+function sifri(mood="happy",cls=""){
+ const modes=["happy","cheer","think","sad","rest"];
+ const state=modes.includes(mood)?mood:"happy";
+ const cheering=state==="cheer",thinking=state==="think",concerned=state==="sad",sleepy=state==="rest";
+ const id=uid("sifri");
+ const brows=thinking
+  ?'<path d="M50 65q8-7 15-3M80 60q8-6 17-1"/>'
+  :concerned?'<path d="M51 63l14 4M80 67l15-4"/>'
+  :cheering?'<path d="M49 65q9-9 17-2M80 63q9-9 17 0"/>'
+  :'<path d="M50 65q8-6 16-1M80 64q8-6 16-1"/>';
+ const eyes=sleepy
+  ?'<path d="M52 79q8 7 15 0M80 79q8 7 15 0" fill="none" stroke="#23304E" stroke-width="3.4" stroke-linecap="round"/>'
+  :cheering?'<path d="M51 79q8-11 16 0M80 79q8-11 16 0" fill="none" stroke="#23304E" stroke-width="3.8" stroke-linecap="round"/>'
+  :'<g class="sifri-eyes"><ellipse cx="59" cy="79" rx="11" ry="14" fill="#FFFDFB"/><ellipse cx="88" cy="79" rx="11" ry="14" fill="#FFFDFB"/><ellipse cx="'+(thinking?62:61)+'" cy="'+(thinking?77:82)+'" rx="6.2" ry="8.7" fill="#32233D"/><ellipse cx="'+(thinking?91:90)+'" cy="'+(thinking?77:82)+'" rx="6.2" ry="8.7" fill="#32233D"/><circle cx="'+(thinking?64:62)+'" cy="'+(thinking?73:77)+'" r="2.8" fill="#FFFDF9"/><circle cx="'+(thinking?93:91)+'" cy="'+(thinking?73:77)+'" r="2.8" fill="#FFFDF9"/></g>';
+ const mouth=cheering
+  ?'<path d="M66 98q8 18 18 0z" fill="#6D2949"/><path d="M70 109q6-5 11 0" stroke="#FFA0AA" stroke-width="3.1" fill="none"/>'
+  :thinking?'<circle cx="76" cy="103" r="4.4" fill="#6D2949"/>'
+  :concerned?'<path d="M68 105q8-6 16 0" stroke="#6D2949" stroke-width="3.2" fill="none" stroke-linecap="round"/>'
+  :sleepy?'<path d="M70 101q6 5 13 0" stroke="#6D2949" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+  :'<path d="M66 99q10 13 20 0" stroke="#6D2949" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+ const arms=cheering
+  ?'<g class="sifri-arms"><path d="M35 90Q19 79 17 65M113 90q15-11 15-26" fill="none" stroke="#A86B35" stroke-width="7" stroke-linecap="round"/><g fill="#FFFEF8" stroke="#B5A8B2" stroke-width="1.5"><ellipse cx="16" cy="62" rx="7" ry="8"/><ellipse cx="129" cy="61" rx="7" ry="8"/></g><g fill="none" stroke="#FFFEF8" stroke-width="3.5" stroke-linecap="round"><path d="M10 60L6 51M17 57v-9M23 59l5-9M124 58l-5-8M131 55v-9M135 58l5-8"/></g></g>'
+  :thinking
+  ?'<g class="sifri-arms"><path d="M35 93Q20 105 16 94M113 92q14-4 7-20" fill="none" stroke="#A86B35" stroke-width="7" stroke-linecap="round"/><g fill="#FFFEF8" stroke="#B5A8B2" stroke-width="1.5"><ellipse cx="16" cy="94" rx="8" ry="6"/><ellipse cx="118" cy="72" rx="7" ry="6"/></g></g>'
+  :'<g class="sifri-arms"><path d="M35 91Q19 99 14 91M113 92q15 8 20-2" fill="none" stroke="#A86B35" stroke-width="7" stroke-linecap="round"/><g fill="#FFFEF8" stroke="#B5A8B2" stroke-width="1.5"><ellipse cx="13" cy="90" rx="8" ry="6"/><ellipse cx="133" cy="90" rx="8" ry="6"/></g><path d="M10 87l-5-5M137 87l5-5" fill="none" stroke="#FFFEF8" stroke-width="4" stroke-linecap="round"/></g>';
+ const stars=cheering?'<g class="sifri-sparkles" fill="#FFCD39"><path d="M15 29l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/><path d="M125 15l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g>':"";
+ return '<svg class="ner sifri sifri-'+state+' '+cls+'" viewBox="0 0 148 162" aria-hidden="true">'+
+ '<defs><linearGradient id="'+id+'cover" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#549BEE"/><stop offset=".25" stop-color="#2872DB"/><stop offset=".63" stop-color="#2054B5"/><stop offset="1" stop-color="#112A7B"/></linearGradient>'+
+ '<linearGradient id="'+id+'pages" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFBE6"/><stop offset="1" stop-color="#E2C48D"/></linearGradient>'+
+ '<linearGradient id="'+id+'gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6A8"/><stop offset=".48" stop-color="#EFB733"/><stop offset="1" stop-color="#AD711B"/></linearGradient>'+
+ '<radialGradient id="'+id+'shine"><stop offset="0" stop-color="#FFE99A" stop-opacity=".75"/><stop offset="1" stop-color="#FFE99A" stop-opacity="0"/></radialGradient></defs>'+
+ '<ellipse class="sifri-glow" cx="74" cy="82" rx="72" ry="69" fill="url(#'+id+'shine)"/>'+stars+
+ '<g class="sifri-feet"><path d="M59 128l-5 19M99 127l5 20" stroke="#97602D" stroke-width="8" stroke-linecap="round"/>'+
+ '<path d="M33 147q7-14 20-10l16 11q4 9-7 11H39q-13 0-6-12zM91 148q10-14 25-9l10 10q3 9-10 10H96q-13-1-5-11z" fill="#244C96" stroke="#122957" stroke-width="2.5"/>'+
+ '<path d="M38 153h26M96 153h25" stroke="#D5E8FD" stroke-width="3.2" stroke-linecap="round"/></g>'+arms+
+ '<g class="sifri-bookmark"><path d="M42 20q-10-11-5-18q6-7 12 1q5 12 9 31l-12 12-9-12z" fill="#F35958" stroke="#B83144" stroke-width="2.2"/><path d="M42 5q-1 12 7 25" stroke="#FFB4B0" stroke-width="3" stroke-linecap="round" fill="none"/></g>'+
+ '<g class="sifri-book"><path d="M29 29l13-7q4-2 9 0l68 6q8 1 8 12v88q-1 10-11 12l-76-5q-11-1-11-12z" fill="#102F72" stroke="#0B2159" stroke-width="3"/>'+
+ '<path d="M112 33l12-2q8 4 8 12v85q-3 10-14 11l-7-6z" fill="url(#'+id+'pages)" stroke="#936B34" stroke-width="2.5"/>'+
+ '<path d="M117 46h9M117 50h9M117 119h9M117 123h9" stroke="#BCA579" stroke-width="1.7" stroke-linecap="round"/>'+
+ '<rect x="33" y="26" width="89" height="110" rx="13" fill="url(#'+id+'gold)" stroke="#8D5E1E" stroke-width="2.3"/>'+
+ '<rect x="38" y="31" width="79" height="100" rx="10" fill="url(#'+id+'cover)" stroke="#F9D567" stroke-width="2.2"/>'+
+ '<rect x="45" y="38" width="65" height="86" rx="7" fill="none" stroke="#F1C44F" stroke-width="1.8" opacity=".95"/>'+
+ '<path d="M48 41h13M94 41h13M48 121h13M94 121h13" stroke="#FFDC69" stroke-width="2.4" stroke-linecap="round"/>'+
+ '<path d="M53 47q22-11 49 0" stroke="#A8D4FF" stroke-width="2.5" opacity=".4" fill="none"/>'+
+ '<path d="M75 42l2 4 4 1-4 2-2 4-2-4-4-2 4-1z" fill="#FFE17A"/>'+
+ '<path d="M41 48v48" stroke="#A9D9FF" stroke-width="3" stroke-linecap="round" opacity=".18"/>'+
+ '<ellipse cx="48" cy="96" rx="9" ry="5" fill="#FF9EAC" opacity=".37"/><ellipse cx="103" cy="96" rx="9" ry="5" fill="#FF9EAC" opacity=".37"/>'+
+ '<g stroke="#203466" stroke-width="3.1" stroke-linecap="round" fill="none">'+brows+'</g>'+eyes+mouth+
+ '<g class="sifri-book-icon" fill="none" stroke="#FFE27F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M66 115q8-4 14 1q6-5 14-1v11q-9-2-14 3q-5-5-14-3z"/><path d="M80 116v13"/></g>'+
+ '</g></svg>';
 }
+function ner(mood="happy",cls=""){return sifri(mood,cls)}
+
 
 const SCENES={
  m1a:{cap:"צאת הכוכבים · nightfall",draw(){const s=uid("s");return `<defs>${sky(s,"#0A1636","#2B4A88")}</defs><rect width="320" height="150" fill="url(#${s})"/>${starField(46,320,95,11)}
