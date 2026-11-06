@@ -29,7 +29,7 @@ function statsCard(){const L=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
  ${next?`<p class="nextb">Next badge: <b>${esc(next.name)}</b> · ${esc(next.d)}</p>`:`<p class="nextb"><b>Every badge earned.</b> Yasher koach!</p>`}
  </section>`}
 function topBar(){const st=streakInfo();return `<header class="top"><div class="wrap">
- <button class="course-chip" data-go="home"><span class="badge">${CRS.chip.b}</span><span class="t"><b>${CRS.chip.t}</b><small>${CRS.chip.s}</small></span></button>
+ <button class="course-chip home-btn" data-go="home" aria-label="Home"><span class="badge"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg></span></button>
  <button class="stat fire ${st.learnedToday?"":"off"}" data-go="progress" aria-label="${st.n} day streak">${I.fire}${st.n}</button>
  <button class="stat xp" data-go="progress" aria-label="${S.xp} XP">${I.bolt}${S.xp}</button>
  <button class="stat bdgs" data-go="progress" aria-label="${badgeCount()} badges">${I.medal}${badgeCount()}</button>

@@ -71,16 +71,6 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
  <section class="h-hi"><button class="h-av" id="hProfile" aria-label="My profile">${avatarSVG(myAvatar(),"","-30 -108 60 112")}</button><div><small>${["Boker tov","Shalom","Erev tov"][new Date().getHours()<12?0:new Date().getHours()<18?1:2]}${name?",":""}</small><h1>${esc(name||"Welcome")}</h1>
   <p>Level ${lv.lv} · ${lv.name} · ${streakNow().short}</p></div>
   <div class="h-ring" aria-label="Today's goal ${tx} of ${goal} XP"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="24" cy="24" r="20" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 24 24)"/></svg><span>${tx}/${goal}</span></div></section>
- <section class="masmid-coach" aria-label="Your learning buddy">
-  <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
-  <div class="masmid-coach-copy">
-   <span class="masmid-coach-label">MEET SIFRI · YOUR LEARNING BUDDY</span>
-   <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
-   <p>${pct>=1?"Today's goal is complete. Keep exploring!":tx>0?"Just "+Math.max(0,goal-tx)+" more XP to reach your daily goal.":"One little lesson is a great place to start."}</p>
-   <div class="masmid-quest"><span aria-hidden="true">✦</span><div><b>Today's mission</b><small>${pct>=1?"Mission complete!":Math.max(0,goal-tx)+" XP until your goal"}</small></div><span class="masmid-quest-pct">${Math.round(pct*100)}%</span></div>
-   <div class="masmid-quest-track" role="progressbar" aria-label="Daily learning goal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct*100)}"><i style="width:${Math.round(pct*100)}%"></i></div>
-  </div>
- </section>
  ${nn?`<section class="h-cont row" style="--c:${(SUBJECTS.find(s=>s.id===cc.id)||{}).c||"var(--blue)"}">
   <div class="h-ct"><span class="h-ic"><svg viewBox="0 0 64 64" aria-hidden="true">${SUBJ_ART[cc.id]||""}</svg></span><small>${coursePct(cc)>0?"Continue":"Start"} · ${esc(cc.chip.t)}</small><h2>${esc(nn.lesson?nn.lesson.title:nn.title)}</h2><p>${esc(cc.units[nx.ui].unit.t)} · ${Math.round(coursePct(cc)*100)}% of the course</p>
   <div class="h-cb"><button class="btn" id="hGo">${coursePct(cc)>0?"Continue":"Start"}</button><button class="btn ghost" data-hpath="${cc.id}">See the path</button></div></div></section>`:""}
@@ -95,7 +85,17 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
   <button class="h-tile" id="hAvatar"><span>🧑</span><b>My avatar</b><small>Unlock new looks</small></button>
   <button class="h-tile" id="hWho"><span>👪</span><b>Profiles</b><small>${Object.keys(ACC.profiles).length>1?Object.keys(ACC.profiles).length+" on this account":"Add someone in your family"}</small></button>
   <button class="h-tile" id="hSettings"><span>⚙️</span><b>Settings</b><small>Goal, calendar, backup</small></button>
- </div></main>`}
+ </div>
+ <section class="masmid-coach" aria-label="Your learning buddy">
+  <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
+  <div class="masmid-coach-copy">
+   <span class="masmid-coach-label">MEET SIFRI · YOUR LEARNING BUDDY</span>
+   <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
+   <p>${pct>=1?"Today's goal is complete. Keep exploring!":tx>0?"Just "+Math.max(0,goal-tx)+" more XP to reach your daily goal.":"One little lesson is a great place to start."}</p>
+   <div class="masmid-quest"><span aria-hidden="true">✦</span><div><b>Today's mission</b><small>${pct>=1?"Mission complete!":Math.max(0,goal-tx)+" XP until your goal"}</small></div><span class="masmid-quest-pct">${Math.round(pct*100)}%</span></div>
+   <div class="masmid-quest-track" role="progressbar" aria-label="Daily learning goal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct*100)}"><i style="width:${Math.round(pct*100)}%"></i></div>
+  </div>
+ </section></main>`}
 function bindHome(){const go=$("#hGo");if(go)go.onclick=()=>{const cc=COURSES[S.course];setCourse(cc.id);const nx=courseNext(cc);if(nx)openNode(nx.ui,nx.i)};
  document.querySelectorAll("[data-hpath]").forEach(b=>b.onclick=()=>{S.course=b.dataset.hpath;save();tab="learn";render();scrollTo(0,0)});
  document.querySelectorAll("[data-hsubj]").forEach(b=>b.onclick=()=>{const id=b.dataset.hsubj,s=SUBJECTS.find(x=>x.id===id);if(!(s.live&&COURSES[id])){subjectSheet(id);return}S.course=id;save();tab="learn";render();scrollTo(0,0)});
