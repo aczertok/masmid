@@ -584,3 +584,26 @@ input[type=text],input[type=email],input[type=password]{border:2px solid var(--l
  text-align:left;
 }
 .masmid-coach-copy>.ner-response:empty{display:none}
+
+/* Ner the Lantern Buddy: original expressive vector mascot. */
+.ner-lantern{overflow:visible;filter:drop-shadow(0 4px 4px rgba(86,54,13,.18))}
+.ner-lantern .ner-hat{transform-origin:52px 34px}
+.ner-lantern .ner-body{transform-origin:52px 92px}
+.ner-lantern .ner-feet{transform-origin:52px 105px}
+.ner-lantern .ner-eyes{transform-origin:52px 62px;animation:nerLanternBlink 5.8s ease-in-out infinite}
+.ner-lantern .ner-glow{animation:nerLanternGlow 2.2s ease-in-out infinite}
+.ner-lantern.ner-mood-cheer .ner-hat{animation:nerLanternHat .58s ease-out infinite alternate}
+.ner-lantern.ner-mood-cheer .ner-feet{animation:nerLanternFeet .48s ease-in-out infinite alternate}
+.ner-lantern.ner-mood-cheer .ner-body{animation:nerLanternCheer .6s ease-in-out infinite alternate}
+.ner-lantern.ner-mood-think .ner-hat{transform:rotate(-8deg)}
+.ner-lantern.ner-mood-think .ner-body{animation:nerLanternThink 1.7s ease-in-out infinite}
+.ner-lantern.ner-mood-sad .ner-body{transform:rotate(-5deg)}
+.ner-lantern.ner-mood-rest .ner-body{animation:nerLanternSleep 3s ease-in-out infinite}
+@keyframes nerLanternBlink{0%,42%,45%,78%,81%,100%{transform:scaleY(1)}43.5%,79.5%{transform:scaleY(.12)}}
+@keyframes nerLanternGlow{0%,100%{opacity:.6;transform:scale(.96);transform-origin:center}50%{opacity:1;transform:scale(1.07)}}
+@keyframes nerLanternHat{from{transform:rotate(-9deg)}to{transform:rotate(10deg)}}
+@keyframes nerLanternFeet{from{transform:rotate(-8deg)}to{transform:rotate(11deg)}}
+@keyframes nerLanternCheer{from{transform:translateY(1px) rotate(-5deg)}to{transform:translateY(-5px) rotate(5deg)}}
+@keyframes nerLanternThink{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+@keyframes nerLanternSleep{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@media(prefers-reduced-motion:reduce){.ner-lantern .ner-eyes,.ner-lantern .ner-glow,.ner-lantern .ner-hat,.ner-lantern .ner-feet,.ner-lantern .ner-body{animation:none!important}}
