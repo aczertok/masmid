@@ -57,7 +57,7 @@ const banner=(b,p)=>`<div class="banner">${ner("rest")}<p><b>${esc(b)}</b>${esc(
 function learnView(){const tx=S.daily[today()]||0,goal=S.settings.goal,pct=Math.min(1,tx/goal),C=2*Math.PI*27,due=dueItems().length;
  const anyDone=courseLessons().some(l=>S.lessons[l.id]?.done);
  const cur=findCurrent();
- return `<main class="wrap stack">${raceBar(cur)}${restBanner()}${heroCard(cur,anyDone)}${statsCard()}${togetherCard()}
+ return `<main class="wrap stack">${raceBar(cur)}<button class="btn ghost block ix-big" data-index>📑 Index · jump to any ${esc(CRS.units[0]?.unitWord||"part")}</button>${restBanner()}${heroCard(cur,anyDone)}${statsCard()}${togetherCard()}
  <section class="card"><div class="goal"><div class="ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="var(--line)" stroke-width="8"/><circle cx="32" cy="32" r="27" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}"/></svg><span>${tx}/${goal}</span></div>
  <div><h3>${pct>=1?"Daily goal met. Yasher koach!":"Today's goal"}</h3><p>${pct>=1?"Anything more is extra credit.":`${goal-tx} XP to go${S.settings.name?", "+esc(S.settings.name):""}.`}</p></div></div>
  ${anyDone?`<button class="btn ${due?"green":"ghost"} block review-btn" id="review">${I.repeat} ${due?`Chazarah · ${due} due`:"Practice weak spots"}</button>`:""}</section>
