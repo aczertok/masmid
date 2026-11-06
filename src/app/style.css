@@ -535,3 +535,29 @@ input[type=text],input[type=email],input[type=password]{border:2px solid var(--l
 .endwrap>.ner-interactive .ner-response{left:50%}
 @media(max-width:390px){.fbrow .ner-interactive{width:55px}.fbrow .ner-interactive .ner{width:50px}.masmid-coach-art .ner-tap{min-height:70px}.ner-response{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.ner-reacting .ner-tap{animation:none!important}}
+
+/* Ner accompanies children in a corner of every lesson, quiz and test. */
+.ner-companion{position:fixed;right:max(12px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 75px);z-index:36;width:94px;pointer-events:none;display:grid;justify-items:center;--ner-progress:0%}
+.ner-companion-button{width:88px;height:98px;position:relative;padding:0;border:0;border-radius:24px;background:transparent;pointer-events:auto;cursor:pointer;touch-action:manipulation}
+.ner-companion-button:focus-visible{outline:3px solid var(--tech);outline-offset:2px}
+.ner-companion-character{display:block;width:100%;height:100%;transform-origin:center bottom;animation:nerBreathe 2.6s ease-in-out infinite}
+.ner-companion-character .ner{display:block;width:100%;height:100%;filter:drop-shadow(0 5px 3px rgba(0,0,0,.18))}
+.ner-companion-character .ner .flame{transform-origin:50px 35px;animation:nerFlame 1s ease-in-out infinite alternate}
+.ner-companion-spark{position:absolute;right:3px;top:5px;color:#d58e06;font-size:22px;animation:nerSparkle 2.2s ease-in-out infinite}
+.ner-companion-meter{width:70px;height:5px;display:block;background:#d3dbe0;border-radius:9px;overflow:hidden;box-shadow:0 1px 4px #0001}
+.ner-companion-meter span{display:block;height:100%;width:var(--ner-progress);background:#79b83e;transition:width .3s}
+.ner-companion-bubble{position:absolute;top:8px;right:85px;background:var(--surface,#fff);color:var(--ink,#16213a);border:2px solid var(--karti,#5eab4c);border-radius:15px;padding:8px 10px;min-width:95px;width:max-content;max-width:min(210px,55vw);box-shadow:0 4px 12px #0002;text-align:center;font-size:12px;line-height:1.25;font-weight:700}
+.ner-companion-bubble:empty{display:none}
+.ner-perform-cheer .ner-companion-character{animation:nerBigCheer .85s ease-out both}
+.ner-perform-think .ner-companion-character{animation:nerThink 1.1s ease-in-out both}
+.ner-perform-highfive .ner-companion-character{animation:nerHighFive .7s ease-out both}
+.ner-perform-wave .ner-companion-character{animation:nerWave 1.1s ease-out both}
+@keyframes nerBreathe{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+@keyframes nerFlame{from{transform:scaleX(.8) rotate(-7deg)}to{transform:scaleX(1.1) rotate(8deg)}}
+@keyframes nerSparkle{0%,100%{opacity:.4;transform:rotate(-18deg) scale(.75)}50%{opacity:1;transform:rotate(20deg) scale(1.25)}}
+@keyframes nerBigCheer{0%,100%{transform:translateY(0) rotate(0)}20%{transform:translateY(-24px) rotate(-12deg) scale(1.15)}40%{transform:translateY(-8px) rotate(10deg)}62%{transform:translateY(-26px) rotate(12deg) scale(1.17)}80%{transform:translateY(-4px) rotate(-8deg)}}
+@keyframes nerThink{0%,100%{transform:rotate(0)}30%,70%{transform:rotate(-14deg) translateY(3px)}}
+@keyframes nerHighFive{0%,100%{transform:translate(0,0) rotate(0)}35%{transform:translate(-18px,-16px) rotate(-20deg) scale(1.22)}65%{transform:translate(-12px,-5px) rotate(12deg)}}
+@keyframes nerWave{0%,100%{transform:rotate(0)}20%{transform:rotate(-15deg)}40%{transform:rotate(14deg)}60%{transform:rotate(-13deg)}80%{transform:rotate(8deg)}}
+@media(max-width:600px){.ner-companion{top:calc(env(safe-area-inset-top,0px) + 61px);right:2px;width:65px}.ner-companion-button{width:63px;height:76px}.ner-companion-meter{width:47px}.ner-companion-bubble{right:56px;max-width:175px;font-size:11px;padding:7px}.lbody{scroll-padding-top:60px}}
+@media(prefers-reduced-motion:reduce){.ner-companion-character,.ner-companion-character .ner .flame,.ner-companion-spark,.ner-perform-cheer .ner-companion-character,.ner-perform-think .ner-companion-character,.ner-perform-highfive .ner-companion-character,.ner-perform-wave .ner-companion-character{animation:none!important}.ner-companion-meter span{transition:none}}
