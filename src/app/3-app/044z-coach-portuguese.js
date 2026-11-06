@@ -30,3 +30,13 @@ Object.assign(PT_UI,{
  "Look how much you've learned!":"Veja só quanto você aprendeu!",
  "One more step on your Torah journey!":"Mais um passo na sua jornada de Torá!"
 });
+
+/* Persistent companion */
+Object.assign(PT_UI,{
+ "Ner learning companion":"Ner, companheiro de estudos",
+ "Give Ner a high five":"Dê um toca aqui para o Ner",
+ "You're making progress!":"Você está avançando!",
+ "Yasher koach! That was terrific!":"Yasher koach! Você foi incrível!",
+ "Almost! Let's learn from this one.":"Quase! Vamos aprender com essa resposta.",
+ "You can try again. I'll be cheering!":"Você pode tentar de novo. Estou torcendo por você!"
+});
