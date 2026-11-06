@@ -99,13 +99,16 @@ function avClean(a){const o=Object.assign({},AV_DEF,a||{});const ok=(cat,v)=>AVO
  for(const k of Object.keys(AV_DEF))if(!ok(k,o[k]))o[k]=AV_DEF[k];const kd=avKind(o.base);
  const hd=AVO.head.find(x=>x.id===o.head);if(!hd||!avFits(hd,kd))o.head=kd==="w"?"sh_bob":kd==="g"?"pony":"kip";
  if(kd!=="m")o.beard="none";if(kd==="w"||kd==="g")o.peyos="none";
- const it=AVO.item.find(x=>x.id===o.item);if(it&&!avFits(it,kd))o.item="none";return o}
+ const it=AVO.item.find(x=>x.id===o.item);if(it&&!avFits(it,kd))o.item="none";
+ if(AVO.outfit&&!AVO.outfit.some(x=>x.id===o.outfit&&avFits(x,kd)))o.outfit="std";return o}
 function myAvatar(){return avClean(Object.assign({},S.avatar||{},{base:profile()||"man"}))}
 /* draw: feet at (0,0), about 100 units tall for adults */
 function avatar(a){const BK=!!(a&&a.back);a=avClean(a);const HC=String(a.head).split("~"),EC=String(a.eyes).split("~");a=Object.assign({},a,{head:HC[0],eyes:EC[0]});const hcol=HC[1],ecol=EC[1];const k=(x=>x==="b"?"m":x)(avKind(a.base)),child=a.base==="boy"||a.base==="girl",sk=AV_SKIN[a.skin],hc=AV_HAIR[a.hair],tc=AV_TOP[a.top];
  const hy=-74,ink="#16213A";let s="";
  /* legs and body */
- if(k==="m"){s+=`<rect x="-9" y="-30" width="8" height="28" rx="3" fill="#1F2433"/><rect x="1" y="-30" width="8" height="28" rx="3" fill="#1F2433"/><ellipse cx="-5" cy="-1" rx="7" ry="3" fill="#0E1018"/><ellipse cx="5" cy="-1" rx="7" ry="3" fill="#0E1018"/>
+ const OF=typeof avOutfit==="function"?avOutfit(a,k,child,tc,sk):null;
+ if(OF&&OF.body)s+=OF.body;
+ else if(k==="m"){s+=`<rect x="-9" y="-30" width="8" height="28" rx="3" fill="#1F2433"/><rect x="1" y="-30" width="8" height="28" rx="3" fill="#1F2433"/><ellipse cx="-5" cy="-1" rx="7" ry="3" fill="#0E1018"/><ellipse cx="5" cy="-1" rx="7" ry="3" fill="#0E1018"/>
   <path d="M-16 -58q0-6 6-7h20q6 1 6 7v30h-32z" fill="${child?"#F4F1E6":tc}"/>${child?`<rect x="-16" y="-34" width="32" height="6" fill="#1F2433"/>`:`<path d="M-5 -65l5 14 5-14z" fill="#F4F1E6"/><path d="M-1 -62h2l1 12-2 3-2-3z" fill="#7A2E3A"/><path d="M0 -51v22" stroke="rgba(0,0,0,.25)" stroke-width="1"/>`}
   ${[-13,13].map(x=>`<path d="M${x} -30v${10}M${x+(x<0?2:-2)} -30v12" stroke="#F4F1E6" stroke-width="1.2"/>`).join("")}`}
  else if(k==="w"){s+=`<ellipse cx="-5" cy="-1" rx="6" ry="3" fill="#0E1018"/><ellipse cx="5" cy="-1" rx="6" ry="3" fill="#0E1018"/><rect x="-7" y="-10" width="5" height="8" fill="#3A2A22"/><rect x="2" y="-10" width="5" height="8" fill="#3A2A22"/>
@@ -113,11 +116,13 @@ function avatar(a){const BK=!!(a&&a.back);a=avClean(a);const HC=String(a.head).s
  else{s+=`<ellipse cx="-5" cy="-1" rx="6" ry="3" fill="#0E1018"/><ellipse cx="5" cy="-1" rx="6" ry="3" fill="#0E1018"/><rect x="-7" y="-14" width="5" height="12" fill="#3A3F52"/><rect x="2" y="-14" width="5" height="12" fill="#3A3F52"/>
   <path d="M-13 -58q0-6 6-7h14q6 1 6 7l5 44h-36z" fill="${tc}"/><path d="M-8 -65h16v6q-8 4-16 0z" fill="#F4F1E6"/>`}
  /* arms */
- const sleeve=k==="g"?"#F4F1E6":child?"#F4F1E6":tc;
+ if(OF&&OF.over)s+=OF.over;
+ const sleeve=OF&&OF.sleeve?OF.sleeve:k==="g"?"#F4F1E6":child?"#F4F1E6":tc;
  s+=`<path d="M-15 -60q-7 10-7 24" stroke="${sleeve}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="-22" cy="-34" r="4" fill="${sk}"/>`;
  const holding=a.item!=="none"&&a.item!=="tefillin";
  s+=holding?`<path d="M15 -60q8 6 4 16" stroke="${sleeve}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="16" cy="-42" r="4" fill="${sk}"/>`:`<path d="M15 -60q7 10 7 24" stroke="${sleeve}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="22" cy="-34" r="4" fill="${sk}"/>`;
  /* back hair (women's sheitels / girls) */
+ if(typeof avBackX==="function")s+=avBackX(a,hy,hc);
  if(a.head==="sh_long")s+=`<path d="M-15 ${hy-2}q-3 24 2 34h26q5-10 2-34z" fill="${hc}"/>`;
  if(a.head==="sh_wave")s+=`<path d="M-16 ${hy-2}q-6 10 0 16t-2 14h36q-4-6 0-14t0-16z" fill="${hc}"/>`;
  if(a.head==="pony")s+=`<path d="M10 ${hy-6}q14 6 8 26q-4-10-10-16z" fill="${hc}"/>`;
@@ -161,6 +166,7 @@ function avatar(a){const BK=!!(a&&a.back);a=avClean(a);const HC=String(a.head).s
   bfedora:`<rect x="-16" y="${hy-12}" width="32" height="4" rx="2" fill="#14161F"/><path d="M-10 ${hy-12}l1-10q9-3 18 0l1 10z" fill="#14161F"/>`,
   bow:`<path d="M-13 ${hy+2}q-1-15 13-15t13 15q-3-7-13-8t-13 8z" fill="${hc}"/><path d="M6 ${hy-12}l8-5v10zM6 ${hy-12}l-6-6v12z" fill="#E57373"/>`,
   band:`<path d="M-13 ${hy+4}q-1-17 13-17t13 17q-3-7-13-8t-13 8z" fill="${hc}"/><path d="M-12 ${hy-6}q12-9 24 0" stroke="${tc}" stroke-width="3" fill="none"/>`};
+ if(typeof avHeadX==="function")Object.assign(H,avHeadX(hy,hc,tc));
  s+=hcol?avxRecolor(H[a.head]||"",a.head,hcol,tc):(H[a.head]||"");
  if(a.item==="tefillin")s+=`<rect x="-4" y="${hy-17}" width="8" height="8" fill="#14161F"/><path d="M-12 ${hy-8}q12 4 24 0" stroke="#14161F" stroke-width="1.5" fill="none"/><path d="M-20 -50l4 14M-21 -44l6 2M-22 -38l6 2" stroke="#14161F" stroke-width="2"/><rect x="-22" y="-56" width="6" height="6" fill="#14161F"/>`;
  /* held items */
@@ -180,7 +186,7 @@ function avatar(a){const BK=!!(a&&a.back);a=avClean(a);const HC=String(a.head).s
  return child?`<g transform="scale(.82)">${s}</g>`:s}
 function avatarSVG(a,cls="",vb="-30 -112 60 116"){const bg=avBg(a);return `<svg class="avsvg ${cls}" viewBox="${vb}" aria-hidden="true"${bg?` style="background:${bg};border-radius:50%"`:""}>${avatar(a)}</svg>`}
 /* unlocks — toast once when something new opens */
-function avAllItems(){const kd=avKind(profile()||"man"),out=[];for(const cat of ["head","beard","peyos","eyes","item","hair","top","bg"]){if(cat==="beard"&&kd!=="m")continue;if(cat==="peyos"&&(kd==="w"||kd==="g"))continue;AVO[cat].forEach(o=>{if(o.req&&avFits(o,kd))out.push({cat,o})})}return out}
+function avAllItems(){const kd=avKind(profile()||"man"),out=[];for(const cat of ["head","beard","peyos","eyes","item","outfit","hair","top","bg"]){if(cat==="beard"&&kd!=="m")continue;if(cat==="peyos"&&(kd==="w"||kd==="g"))continue;AVO[cat].forEach(o=>{if(o.req&&avFits(o,kd))out.push({cat,o})})}return out}
 function checkUnlocks(){S.unlockSeen=S.unlockSeen||{};const st=avStats();const fresh=[];
  avAllItems().forEach(({cat,o})=>{const key=cat+":"+o.id;if(!S.unlockSeen[key]&&reqMet(o.req,st)){S.unlockSeen[key]=1;fresh.push(o.n)}});
  if(typeof TOWN_ITEMS!=="undefined")TOWN_ITEMS.forEach(t=>{const key="town:"+t.id;if(t.req&&!S.unlockSeen[key]&&reqMet(t.req,st)){S.unlockSeen[key]=1;fresh.push(t.n)}});
@@ -189,9 +195,9 @@ function checkUnlocks(){S.unlockSeen=S.unlockSeen||{};const st=avStats();const f
  else if(!S.unlockInit){S.unlockInit=1;save()}}
 let avTab="head";
 function avatarStudio(){const a=myAvatar(),st=avStats(),kd=avKind(a.base);
- const cats=[["head",kd==="w"?"Sheitel & hats":kd==="g"?"Hair":"Kippah & hats"],...(kd==="m"?[["beard","Beard"]]:[]),...(kd==="m"||kd==="b"?[["peyos","Peyos"]]:[]),["eyes","Glasses"],["item","Holding"],["skin","Skin"],["hair","Hair color"],["top","Clothes"],["bg","Background"]];
+ const cats=[["head",kd==="w"?"Sheitel & hats":kd==="g"?"Hair":"Kippah & hats"],...(kd==="m"?[["beard","Beard"]]:[]),...(kd==="m"||kd==="b"?[["peyos","Peyos"]]:[]),["eyes","Glasses"],["item","Holding"],["skin","Skin"],["hair","Hair color"],["outfit","Outfit"],["top","Clothes color"],["bg","Background"]];
  if(!cats.some(c=>c[0]===avTab))avTab="head";
- const opts=AVO[avTab].filter(o=>avFits(o,kd));
+ const opts=AVO[avTab].filter(o=>avFits(o,kd));const avFind=id=>opts.find(x=>String(x.id)===id);
  const unlocked=avAllItems().filter(x=>reqMet(x.o.req,st)).length,total=avAllItems().length;
  sheet(`<div class="avs"><div class="avs-prev">${avatarSVG(a,"big")}<div><h3>Your avatar</h3><p class="small" style="margin:0">${PROFILE_ONE[profile()||"man"]} · change in Settings</p><p class="sub">${unlocked} of ${total} extras unlocked. Learn more to open the rest.</p><input type="text" id="avnick" maxlength="24" placeholder="Your name" value="${esc(S.settings.name||"")}" aria-label="Your name"></div></div>
   <div class="avs-tabs">${cats.map(([k,n])=>`<button data-avt="${k}" aria-pressed="${k===avTab}">${n}</button>`).join("")}</div>
@@ -199,7 +205,7 @@ function avatarStudio(){const a=myAvatar(),st=avStats(),kd=avKind(a.base);
    return `<button class="avo ${sel?"sel":""} ${ok?"":"locked"}" data-avo="${o.id}" ${ok?"":"aria-disabled=\"true\""}>${o.sw?`<span class="sw" style="background:${o.sw}"></span>`:avatarSVG(prev,"","-30 -112 60 116")}<small>${esc(o.n)}</small>${ok?"":`<em>${I.lock}${esc(reqText(o.req))}</em>`}</button>`}).join("")}</div>
   <button class="btn block" id="avdone">Done</button></div>`,()=>{
   document.querySelectorAll("[data-avt]").forEach(b=>b.onclick=()=>{avTab=b.dataset.avt;avatarStudio()});
-  document.querySelectorAll("[data-avo]").forEach(b=>b.onclick=()=>{const o=AVO[avTab].find(x=>String(x.id)===b.dataset.avo);if(!o)return;if(!reqMet(o.req)){toast("Unlocks with "+reqText(o.req));return}
+  document.querySelectorAll("[data-avo]").forEach(b=>b.onclick=()=>{const o=avFind(b.dataset.avo);if(!o)return;if(!reqMet(o.req)){toast("Unlocks with "+reqText(o.req));return}
    S.avatar=avClean(Object.assign({},a,{[avTab]:o.id}));save();if(typeof ltPresence==="function")ltPresence();avatarStudio()});
   $("#avnick").onchange=e=>{S.settings.name=e.target.value.trim().slice(0,24);save()};
   $("#avdone").onclick=()=>{closeSheet();render()}})}
