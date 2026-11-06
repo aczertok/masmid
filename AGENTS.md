@@ -22,12 +22,19 @@ npm run build        # writes public/ (the website) and dist/limud.html (the sin
 ```
 Open `public/index.html` through a local server, or `dist/limud.html` directly, to check a change. `npm test` runs the sign-in/save tests (needs the Firebase emulator).
 
-Netlify builds and publishes the site automatically from the `main` branch (see `netlify.toml`). Every pull request gets its own preview link.
+Netlify publishes `main` to the live site and `staging` to a permanent testing site (once the `staging` branch deploy is enabled in Netlify). Per-pull-request Deploy Previews have different domains and should not be used for Firebase sign-in tests. The permanent sign-in test address is `https://staging--masmid.netlify.app`.
 
 ## Rules
-1. **Work on a branch and open a pull request.** Don't push to `main` directly. Keep each pull request to one change and describe it in plain words.
+1. **Work on a feature branch and open a pull request.** Don't push to `main` directly. Keep each pull request to one change and describe it in plain words. For sign-in, progress, or interactive QA, use the persistent `staging` branch website, not an individual PR deploy preview. To test a feature there, merge its feature branch into `staging` (or open a PR targeting `staging`) while keeping `main` unchanged. After user review, move approved changes to `main` through a separate PR. Keep `staging` synchronized with `main` following releases. Never merge or publish changes to `main` without the owner's approval.
 2. **Never rename or reuse ids** (lesson ids, unit keys, badge ids, avatar items, buildings). Learners' progress is stored against them. See `docs/app-and-data.md`.
 3. **Content follows `docs/orthodox-content-standards.md`:** approved editions only, Hashem's Name written ה' / אלקים, modest pictures (no women, angels or Hashem drawn), bodily or marital topics never used in questions or pictures, separate groups for men, women, boys and girls.
 4. **Two languages:** English and Portuguese. New on-screen English text should get a Portuguese entry in `PT_UI` (in the `…portuguese…` / language piece of `3-app/`), or it will show in English in Portuguese mode.
 5. **Don't change `src/firebase-config.js` or `firestore.rules`** unless asked; rules changes must also be published in the Firebase console.
 6. Keep the app working offline and on small phone screens (390px wide).
+
+## Permanent staging workflow for Claude and ChatGPT
+- **Live:** https://masmid.netlify.app (`main`). **Testing:** https://staging--masmid.netlify.app (`staging`). Enable a Netlify branch deploy for `staging`, and add `staging--masmid.netlify.app` once in Firebase Authentication > Settings > Authorized domains.
+- Do not tell the owner to add every `deploy-preview-<number>--masmid.netlify.app` domain to Firebase. Test Google popup sign-in on permanent staging.
+- For new features: create a feature branch and PR, identify the test path, and do not treat an individual PR preview as an authenticated staging test. Once approved for staging, merge the feature into `staging`, verify its branch deploy, and request review before production.
+- Do not overwrite other staging changes or assume every staging change is production-approved. If staging holds unfinished features, assemble a clean release PR with only approved changes.
+- Preserve identifiers, learner progress, Firebase configuration/rules, bilingual support, Orthodox standards, and mobile/offline behavior.
