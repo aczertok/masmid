@@ -607,3 +607,51 @@ input[type=text],input[type=email],input[type=password]{border:2px solid var(--l
 @keyframes nerLanternThink{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
 @keyframes nerLanternSleep{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
 @media(prefers-reduced-motion:reduce){.ner-lantern .ner-eyes,.ner-lantern .ner-glow,.ner-lantern .ner-hat,.ner-lantern .ner-feet,.ner-lantern .ner-body{animation:none!important}}
+
+/* Sifri the Sefer buddy: bright blue cover, golden details, red bookmark, expressive motion.
+   Overrides earlier candle/lantern styles without affecting learner data. */
+.sifri{overflow:visible;filter:drop-shadow(0 6px 5px rgba(25,55,121,.2))}
+.sifri .sifri-book{transform-origin:76px 119px}
+.sifri .sifri-feet{transform-origin:75px 148px}
+.sifri .sifri-arms{transform-origin:76px 94px}
+.sifri .sifri-bookmark{transform-origin:45px 30px;animation:sifriBookmark 2.4s ease-in-out infinite}
+.sifri .sifri-glow{transform-origin:74px 82px;animation:sifriWarmGlow 3.5s ease-in-out infinite}
+.sifri .sifri-eyes{transform-origin:74px 79px;animation:sifriBlink 6.4s ease-in-out infinite}
+.sifri-cheer .sifri-book{animation:sifriParty .55s ease-in-out infinite alternate}
+.sifri-cheer .sifri-feet{animation:sifriFeet .55s ease-in-out infinite alternate}
+.sifri-cheer .sifri-arms{animation:sifriArms .55s ease-in-out infinite alternate}
+.sifri-think .sifri-book{animation:sifriThinking 1.8s ease-in-out infinite}
+.sifri-sad .sifri-book{transform:rotate(-5deg)}
+.sifri-rest .sifri-book{animation:sifriBreathe 3.4s ease-in-out infinite}
+.sifri-sparkles{transform-origin:74px 74px;animation:sifriStars 1s ease-in-out infinite alternate}
+@keyframes sifriBlink{0%,32%,34%,65%,67%,100%{transform:scaleY(1)}33%,66%{transform:scaleY(.12)}}
+@keyframes sifriBookmark{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(9deg)}}
+@keyframes sifriWarmGlow{0%,100%{opacity:.53;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes sifriParty{from{transform:rotate(-8deg) translateY(0)}to{transform:rotate(8deg) translateY(-8px)}}
+@keyframes sifriFeet{from{transform:rotate(-7deg)}to{transform:rotate(8deg)}}
+@keyframes sifriArms{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+@keyframes sifriThinking{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(4deg)}}
+@keyframes sifriBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes sifriStars{from{opacity:.45;transform:scale(.9)}to{opacity:1;transform:scale(1.1)}}
+.masmid-coach{grid-template-columns:minmax(112px,132px) minmax(0,1fr);background:linear-gradient(135deg,#EEF6FF 0%,#EAF5FF 50%,#FFF9E4 100%);border-color:#B7D5FF}
+.masmid-coach-art{width:125px;filter:drop-shadow(0 8px 4px rgba(30,86,170,.13))}
+.masmid-coach-label{color:#2565B0}
+.masmid-quest-track{background:#D7E9FF}
+.masmid-quest-track i{background:linear-gradient(90deg,#4E9AEF,#2457B5)}
+.masmid-quest-pct{color:#2457B5}
+.masmid-coach .ner-tap{min-height:122px}
+.masmid-coach .ner-touch-hint{background:#FFF1CA;color:#8E5B13;border-color:#F5CB58}
+.ner-companion-character .sifri{width:100%;height:100%;filter:drop-shadow(0 5px 3px rgba(24,53,115,.16))}
+.ner-companion-meter span{background:linear-gradient(90deg,#4E9AEF,#2457B5)}
+.endwrap .sifri{max-height:185px}
+@media(max-width:390px){
+ .masmid-coach{grid-template-columns:84px minmax(0,1fr);padding:12px 10px;gap:9px}
+ .masmid-coach-art{width:83px}
+ .masmid-coach .ner-tap{min-height:88px}
+ .masmid-coach-label{font-size:9.5px;letter-spacing:.02em}
+ .masmid-coach-copy>.ner-response{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ .sifri .sifri-bookmark,.sifri .sifri-glow,.sifri .sifri-eyes,
+ .sifri .sifri-book,.sifri .sifri-feet,.sifri .sifri-arms,.sifri .sifri-sparkles{animation:none!important}
+}
