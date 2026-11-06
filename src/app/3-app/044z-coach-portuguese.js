@@ -13,3 +13,20 @@ Object.assign(PT_UI, {
  "Your learning buddy": "Seu companheiro de estudos",
  "Daily learning goal": "Meta diária de estudos"
 });
+
+/* Ner interaction messages */
+Object.assign(PT_UI,{
+ "Tap Ner for encouragement":"Toque no Ner para receber incentivo",
+ "Yasher koach! Every little step counts.":"Yasher koach! Cada pequeno passo conta.",
+ "Ready for a little Torah challenge?":"Pronto para um pequeno desafio de Torá?",
+ "You and I make a great learning team!":"Nós dois formamos uma ótima equipe de estudos!",
+ "Let's make today's learning shine!":"Vamos fazer o estudo de hoje brilhar!",
+ "A few minutes of learning can go a long way!":"Alguns minutos de estudo fazem uma grande diferença!",
+ "Nice effort! Keep going!":"Muito bem pelo esforço! Continue!",
+ "Every answer helps you grow.":"Cada resposta ajuda você a crescer.",
+ "Take your time. You've got this!":"Vá com calma. Você consegue!",
+ "I'm cheering you on!":"Estou torcendo por você!",
+ "You did it! Yasher koach!":"Você conseguiu! Yasher koach!",
+ "Look how much you've learned!":"Veja só quanto você aprendeu!",
+ "One more step on your Torah journey!":"Mais um passo na sua jornada de Torá!"
+});
