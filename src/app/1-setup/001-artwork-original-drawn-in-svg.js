@@ -4,28 +4,45 @@ function starField(n,w,h,seed){let r=seed||7;const rnd=()=>(r=(r*9301+49297)%233
  for(let i=0;i<n;i++){const x=rnd()*w,y=rnd()*h,z=rnd()*1.5+.5;s+=`<circle class="tw" style="animation-delay:${(rnd()*3).toFixed(2)}s" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${z.toFixed(1)}" fill="#fff"/>`}return s}
 function sky(id,a,b){return `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`}
 
-/* Ner, the app's candle mascot. moods: happy, cheer, think, sad, rest */
-function ner(mood="happy",cls=""){const g=uid("glow");
- const eyes=mood==="rest"?`<path d="M38 63q4 4 8 0M54 63q4 4 8 0" stroke="#16213A" stroke-width="2.6" fill="none" stroke-linecap="round"/>`
-  :mood==="think"?`<circle cx="44" cy="61" r="3.6" fill="#16213A"/><circle cx="58" cy="61" r="3.6" fill="#16213A"/><circle cx="45" cy="59.8" r="1.2" fill="#fff"/><circle cx="59" cy="59.8" r="1.2" fill="#fff"/>`
-  :`<circle cx="43" cy="63" r="3.8" fill="#16213A"/><circle cx="57" cy="63" r="3.8" fill="#16213A"/><circle cx="44.2" cy="61.6" r="1.3" fill="#fff"/><circle cx="58.2" cy="61.6" r="1.3" fill="#fff"/>`;
- const mouth={happy:`<path d="M44 74q6 6 12 0" stroke="#16213A" stroke-width="2.6" fill="none" stroke-linecap="round"/>`,
-  cheer:`<path d="M42 72q8 12 16 0z" fill="#16213A"/><path d="M45.5 76q4.5 3 9 0" fill="#E8636B"/>`,
-  think:`<circle cx="52" cy="76" r="2.6" fill="#16213A"/>`,
-  sad:`<path d="M44 78q6-5 12 0" stroke="#16213A" stroke-width="2.6" fill="none" stroke-linecap="round"/>`,
-  rest:`<path d="M45 74q5 4 10 0" stroke="#16213A" stroke-width="2.4" fill="none" stroke-linecap="round"/>`}[mood];
- const big=mood==="cheer"?1.18:mood==="sad"?.78:1;
- const arms=mood==="cheer"?`<path d="M34 70l-12-14M66 70l12-14" stroke="#E9D9B0" stroke-width="5" stroke-linecap="round"/><circle cx="21" cy="55" r="3.5" fill="#FFF8E7"/><circle cx="79" cy="55" r="3.5" fill="#FFF8E7"/>`:"";
- const zz=mood==="rest"?`<text x="70" y="30" font-family="Rubik,sans-serif" font-weight="800" font-size="13" fill="currentColor" opacity=".7">z</text><text x="79" y="20" font-family="Rubik,sans-serif" font-weight="800" font-size="10" fill="currentColor" opacity=".5">z</text>`:"";
- const spark=mood==="cheer"?`<path class="tw" d="M14 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#F1BD3C"/><path class="tw" style="animation-delay:.6s" d="M86 34l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z" fill="#F1BD3C"/>`:"";
- return `<svg class="ner ${cls}" viewBox="0 0 100 124" aria-hidden="true"><defs><radialGradient id="${g}"><stop offset="0" stop-color="#FFD866" stop-opacity=".55"/><stop offset="1" stop-color="#FFD866" stop-opacity="0"/></radialGradient></defs>
- <circle cx="50" cy="${mood==="rest"?28:24}" r="${26*big}" fill="url(#${g})"/>${spark}${arms}
- <g style="transform-origin:50px 40px;transform:scale(${big})"><g class="flame"><path d="M50 8c10 13 13 22 0 32-13-10-10-19 0-32z" fill="#F4A51C"/><path d="M50 20c5 7 6 12 0 17-6-5-5-10 0-17z" fill="#FFF0B8"/></g></g>
- <path d="M50 39v4" stroke="#3B2A10" stroke-width="2"/>
- <rect x="32" y="42" width="36" height="62" rx="10" fill="#FFF8E7" stroke="#E9D9B0" stroke-width="2"/>
- <path d="M60 44c4 2 6 6 6 9-3-1-5-3-6-5z" fill="#F3E7C7"/>
- ${eyes}<ellipse cx="38" cy="71" rx="4" ry="2.6" fill="#F2A1A7" opacity=".65"/><ellipse cx="62" cy="71" rx="4" ry="2.6" fill="#F2A1A7" opacity=".65"/>${mouth}
- <path d="M22 106h56l-6 10H28z" fill="#E3A312"/><rect x="18" y="102" width="64" height="6" rx="3" fill="#F1BD3C"/>${zz}</svg>`}
+/* Ner the Lantern Buddy: vector artwork, shared by home, lessons and tests. */
+function ner(mood="happy",cls=""){
+ const id=uid("lantern"),cheer=mood==="cheer",think=mood==="think",sad=mood==="sad",rest=mood==="rest";
+ const eyes=rest?'<path d="M36 65q7 6 13 0M55 65q7 6 13 0" fill="none" stroke="#50303A" stroke-width="2.7" stroke-linecap="round"/>':
+ '<g class="ner-eyes"><ellipse cx="43" cy="62" rx="8" ry="10" fill="#FFFDF3"/><ellipse cx="62" cy="62" rx="8" ry="10" fill="#FFFDF3"/><ellipse cx="'+(think?45:44)+'" cy="'+(think?60:64)+'" rx="4.5" ry="6.3" fill="#352536"/><ellipse cx="'+(think?64:63)+'" cy="'+(think?60:64)+'" rx="4.5" ry="6.3" fill="#352536"/><circle cx="'+(think?46:45)+'" cy="'+(think?57:61)+'" r="2.1" fill="#fff"/><circle cx="'+(think?65:64)+'" cy="'+(think?57:61)+'" r="2.1" fill="#fff"/></g>';
+ const mouth=cheer?'<path d="M44 77q9 16 18 0z" fill="#713744"/><path d="M49 84q5-3 9 0" fill="none" stroke="#F59BA4" stroke-width="2.4"/>':
+ think?'<ellipse cx="54" cy="80" rx="3.5" ry="4" fill="#713744"/>':
+ sad?'<path d="M46 82q7-6 14 0" stroke="#713744" stroke-width="2.7" fill="none" stroke-linecap="round"/>':
+ '<path d="M44 76q9 11 18 0" stroke="#713744" stroke-width="3" fill="none" stroke-linecap="round"/>';
+ const brows=think?'<path d="M35 50q7-7 13-3M56 47q7-6 12-3"/>':
+ sad?'<path d="M36 50l12 3M56 53l12-3"/>':
+ '<path d="M36 50q6-4 12 0M56 50q6-4 12 0"/>';
+ const arms=cheer?'<path d="M26 65Q14 54 13 45M77 65Q89 54 89 43" stroke="#A96528" stroke-width="6" stroke-linecap="round" fill="none"/><g fill="#FFFDF7" stroke="#AF9D80" stroke-width="1.4"><ellipse cx="13" cy="44" rx="6.2" ry="7"/><ellipse cx="89" cy="42" rx="6.2" ry="7"/></g><path d="M8 42l-3-7M14 39l-1-8M19 42l3-7M84 40l-3-7M90 37l0-7M95 40l3-7" stroke="#FFFDF7" stroke-width="3.5" stroke-linecap="round"/>':
+ '<path d="M26 66Q18 75 12 69M77 66Q87 74 91 66" stroke="#A96528" stroke-width="6" stroke-linecap="round" fill="none"/><g fill="#FFFDF7" stroke="#AF9D80" stroke-width="1.4"><ellipse cx="12" cy="69" rx="7" ry="5.5"/><ellipse cx="91" cy="66" rx="7" ry="5.5"/></g><path d="M8 67l-4-4M96 64l4-4" stroke="#FFFDF7" stroke-width="4" stroke-linecap="round"/>';
+ return '<svg class="ner ner-lantern ner-mood-'+mood+' '+cls+'" viewBox="0 0 104 124" aria-hidden="true">'+
+ '<defs><radialGradient id="'+id+'gl"><stop offset="0" stop-color="#FFE99D" stop-opacity=".7"/><stop offset="1" stop-color="#FFD347" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="'+id+'gold" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FFF8B7"/><stop offset=".4" stop-color="#FFDA58"/><stop offset="1" stop-color="#EFA028"/></linearGradient>'+
+ '<linearGradient id="'+id+'hat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5697E7"/><stop offset="1" stop-color="#15336C"/></linearGradient></defs>'+
+ '<ellipse cx="52" cy="65" rx="52" ry="56" fill="url(#'+id+'gl)" class="ner-glow"/>'+
+ (cheer?'<g class="ner-sparkles" fill="#FFD247"><path d="M7 22l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path d="M94 19l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></g>':'')+
+ (rest?'<text x="80" y="18" fill="#244D93" font-size="15" font-weight="800">z</text>':'')+
+ '<g class="ner-feet"><path d="M40 93L38 108M65 93L67 108" stroke="#8B5328" stroke-width="7" stroke-linecap="round"/>'+
+ '<path d="M19 111q6-10 17-7l10 7q3 7-4 9H22q-8-1-3-9M58 111q10-11 21-6l7 9q0 6-8 6H60q-7-3-2-9" fill="#273F7D" stroke="#15284F" stroke-width="2"/>'+
+ '<path d="M23 115h19M62 115h20" stroke="#B6D0ED" stroke-width="2.3" stroke-linecap="round"/></g>'+
+ arms+
+ '<path d="M75 44q19-4 20 14v26q-1 10-17 10l-5-9z" fill="#275CB0" stroke="#153B7B" stroke-width="2.8"/>'+
+ '<path d="M80 60q10-1 11 5v12q-4 4-11 2" fill="none" stroke="#86B2EB" stroke-width="2"/>'+
+ '<g class="ner-body"><path d="M26 40q0-10 12-10h28q15 0 15 14v45q-1 12-14 12H38Q25 99 25 88z" fill="#AE7029" stroke="#744219" stroke-width="2.5"/>'+
+ '<path d="M31 41q1-7 11-7h24q10 0 10 10v42q0 9-11 9H40q-9 0-9-9z" fill="url(#'+id+'gold)"/>'+
+ '<path d="M36 40q6-4 17-4Q39 53 36 77q-7-18 0-37" fill="#FFF8C6" opacity=".54"/>'+
+ '<ellipse cx="36" cy="75" rx="7" ry="4" fill="#F48D82" opacity=".47"/><ellipse cx="70" cy="75" rx="7" ry="4" fill="#F48D82" opacity=".47"/>'+
+ '<g stroke="#5B3E33" stroke-width="2.6" fill="none" stroke-linecap="round">'+brows+'</g>'+eyes+mouth+
+ '<path d="M26 89q4 12 14 12h28q11-1 14-12l-5 14q-25 6-47 0z" fill="#C68937" stroke="#915D2B" stroke-width="1.7"/>'+
+ '<path d="M32 98h41" stroke="#FFE3A1" stroke-width="2.3" stroke-linecap="round"/></g>'+
+ '<g class="ner-hat"><path d="M42 20Q40 3 52 3t12 17" fill="none" stroke="#B57D38" stroke-width="6" stroke-linecap="round"/>'+
+ '<path d="M40 20q12-9 25 0l7 15H33z" fill="url(#'+id+'hat)" stroke="#173665" stroke-width="2.6"/>'+
+ '<path d="M29 33q23-8 47 0q4 6-3 7H32q-8-3-3-7" fill="#316AB5" stroke="#153D77" stroke-width="2"/>'+
+ '<path d="M41 25q9-4 19-1" fill="none" stroke="#C3DEFF" stroke-width="2.2" stroke-linecap="round"/></g></svg>';
+}
 
 const SCENES={
  m1a:{cap:"צאת הכוכבים · nightfall",draw(){const s=uid("s");return `<defs>${sky(s,"#0A1636","#2B4A88")}</defs><rect width="320" height="150" fill="url(#${s})"/>${starField(46,320,95,11)}

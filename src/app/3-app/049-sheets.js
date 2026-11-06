@@ -37,6 +37,7 @@ function segBind(sel,fn){document.querySelectorAll(sel+" button").forEach(b=>b.o
 function settingsSheet(){sheet(`<h3>Settings</h3>${window.LimudAuth&&LimudAuth.user?`<div class="row2"><span class="small">Signed in as <b>${esc(LimudAuth.user.email||LimudAuth.user.displayName||"")}</b></span><button class="btn ghost sm" id="sOut">Sign out</button></div>`:""}
  ${profilesBlock()}
  <div class="field">Language · Idioma<div>${langPick()}</div></div>
+ <label class="field row2" for="ssound"><span>Sounds<br><small class="small">Sounds (and a little buzz) for right and wrong answers</small></span><input type="checkbox" id="ssound" ${S.settings.sound!==false?"checked":""}></label>
  <div class="field">Daily goal<div class="seg" id="sgoal">${[[20,"Casual"],[30,"Regular"],[50,"Serious"]].map(([v,n])=>`<button data-v="${v}" aria-pressed="${S.settings.goal===v}">${n}<small>${v} XP</small></button>`).join("")}</div></div>
  <div class="field">Streak<div class="seg" id="sstreak"><button data-v="day" aria-pressed="${S.settings.streakMode!=="week"}">Daily<small>learn every day</small></button><button data-v="week" aria-pressed="${S.settings.streakMode==="week"}">Weekly<small>days per week</small></button></div>
   <div class="seg" id="sweek" style="margin-top:8px;${S.settings.streakMode==="week"?"":"display:none"}">${[2,3,4,5].map(v=>`<button data-v="${v}" aria-pressed="${(+S.settings.weekGoal||3)===v}">${v} days<small>a week</small></button>`).join("")}</div></div>

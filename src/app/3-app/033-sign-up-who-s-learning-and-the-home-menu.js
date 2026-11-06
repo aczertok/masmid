@@ -72,7 +72,7 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
   <p>Level ${lv.lv} · ${lv.name} · ${streakNow().short}</p></div>
   <div class="h-ring" aria-label="Today's goal ${tx} of ${goal} XP"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="24" cy="24" r="20" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 24 24)"/></svg><span>${tx}/${goal}</span></div></section>
  <section class="masmid-coach" aria-label="Your learning buddy">
-  <div class="masmid-coach-art" aria-hidden="true">${ner(pct>=1?"cheer":"happy")}</div>
+  <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
   <div class="masmid-coach-copy">
    <span class="masmid-coach-label">MEET NER · YOUR LEARNING BUDDY</span>
    <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
@@ -86,6 +86,7 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
   <div class="h-cb"><button class="btn" id="hGo">${coursePct(cc)>0?"Continue":"Start"}</button><button class="btn ghost" data-hpath="${cc.id}">See the path</button></div></div></section>`:""}
  <h2 class="h-sec">Explore</h2>
  <div class="h-tiles">
+  <button class="h-tile" id="hGames"><span>🎮</span><b>Games</b><small>Play with what you learned</small></button>
   <button class="h-tile" id="hWorld"><span>🌍</span><b>The whole world</b><small>Every subject as a continent</small></button>
   <button class="h-tile" id="hMap"><span>🗺️</span><b>Map</b><small>${esc(ZEDATA[cc.id]?ZEDATA[cc.id].t:cc.chip.t)}</small></button>
   <button class="h-tile" data-go="town"><span>🏘️</span><b>My town</b><small>Build with what you learn</small></button>
@@ -98,7 +99,7 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
 function bindHome(){const go=$("#hGo");if(go)go.onclick=()=>{const cc=COURSES[S.course];setCourse(cc.id);const nx=courseNext(cc);if(nx)openNode(nx.ui,nx.i)};
  document.querySelectorAll("[data-hpath]").forEach(b=>b.onclick=()=>{S.course=b.dataset.hpath;save();tab="learn";render();scrollTo(0,0)});
  document.querySelectorAll("[data-hsubj]").forEach(b=>b.onclick=()=>{const id=b.dataset.hsubj,s=SUBJECTS.find(x=>x.id===id);if(!(s.live&&COURSES[id])){subjectSheet(id);return}S.course=id;save();tab="learn";render();scrollTo(0,0)});
- $("#hWorld").onclick=globeView;$("#hMap").onclick=()=>{setCourse(S.course);shasMap()};$("#hTogether").onclick=()=>communitySheet();
+ $("#hWorld").onclick=globeView;const hg=$("#hGames");if(hg)hg.onclick=()=>gamesSheet();$("#hMap").onclick=()=>{setCourse(S.course);shasMap()};$("#hTogether").onclick=()=>communitySheet();
  $("#hAvatar").onclick=avatarStudio;$("#hProfile").onclick=()=>profileSheet();$("#hSettings").onclick=settingsSheet;
  $("#hWho").onclick=()=>Object.keys(ACC.profiles).length>1?whoSheet():signUp("add")}
 (()=>{const st=document.createElement("style");st.textContent=`
