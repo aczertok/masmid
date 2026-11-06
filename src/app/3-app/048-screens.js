@@ -6,9 +6,9 @@ let tab="home";
 .lh-prev{display:block;margin:0 auto}.hero .hero-scene[hidden]{display:none}.hero.compact .hero-b{padding-top:14px}
 .h-cont.row .h-ct{display:grid;grid-template-columns:auto 1fr;column-gap:12px}.h-ic{grid-row:1/5;width:56px;height:56px;border-radius:16px;background:color-mix(in srgb,var(--c) 14%,#fff);display:grid;place-items:center}.h-ic svg{width:42px;height:42px}.h-cont.row .h-cb{grid-column:1/-1;margin-top:4px}`;document.head.appendChild(st)})();
 function render(){try{if(S&&S.badges)evalBadges(id=>{S.badges[id]=today()})}catch(e){}try{if(AUTH==="in"&&window.LimudSocial&&profile())socStart()}catch(e){}const nav=document.querySelector("nav.tabs");if(nav)nav.hidden=AUTH==="pending"||AUTH==="out";
- if(AUTH==="pending"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Limud Path</h1><p class="sub">Signing you in…</p><span class="gate-spin"></span></div>`;return}
+ if(AUTH==="pending"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Masmid</h1><p class="sub">Signing you in…</p><span class="gate-spin"></span></div>`;return}
  if(AUTH==="out"&&window.LimudAuth){signInView();return}
- if(AUTH==="out"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Limud Path</h1><p>Welcome!</p>
+ if(AUTH==="out"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Masmid</h1><p>Welcome!</p>
   <p class="sub">You're not signed in here, so your progress can't be saved to an account. You can still learn: your profile is kept on this device.</p>
   <div class="langtop">${langPick()}</div><button class="btn block" id="gateLocal">Start learning on this device</button><p class="small">Your profile and progress are saved on this phone or computer.</p><button class="linkbtn" id="gateRe">I'm signed in to Claude — try again</button></div>`;$("#gateRe").onclick=()=>location.reload();$("#gateLocal").onclick=()=>{try{localStorage.setItem(KEY2+".local","1")}catch(e){}AUTH="local";render()};return}
  setCourse(S.course);document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===tab?"page":"false"));
@@ -29,7 +29,7 @@ function statsCard(){const L=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
  ${next?`<p class="nextb">Next badge: <b>${esc(next.name)}</b> · ${esc(next.d)}</p>`:`<p class="nextb"><b>Every badge earned.</b> Yasher koach!</p>`}
  </section>`}
 function topBar(){const st=streakInfo();return `<header class="top"><div class="wrap">
- <button class="course-chip" data-go="home"><span class="badge">${CRS.chip.b}</span><span class="t"><b>${CRS.chip.t}</b><small>${CRS.chip.s}</small></span></button>
+ <button class="course-chip home-btn" data-go="home" aria-label="Home"><span class="badge"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg></span></button>
  <button class="stat fire ${st.learnedToday?"":"off"}" data-go="progress" aria-label="${st.n} day streak">${I.fire}${st.n}</button>
  <button class="stat xp" data-go="progress" aria-label="${S.xp} XP">${I.bolt}${S.xp}</button>
  <button class="stat bdgs" data-go="progress" aria-label="${badgeCount()} badges">${I.medal}${badgeCount()}</button>
@@ -57,7 +57,7 @@ const banner=(b,p)=>`<div class="banner">${ner("rest")}<p><b>${esc(b)}</b>${esc(
 function learnView(){const tx=S.daily[today()]||0,goal=S.settings.goal,pct=Math.min(1,tx/goal),C=2*Math.PI*27,due=dueItems().length;
  const anyDone=courseLessons().some(l=>S.lessons[l.id]?.done);
  const cur=findCurrent();
- return `<main class="wrap stack">${raceBar(cur)}${restBanner()}${heroCard(cur,anyDone)}${statsCard()}${togetherCard()}
+ return `<main class="wrap stack">${raceBar(cur)}<button class="btn ghost block ix-big" data-index>📑 Index · jump to any ${esc(CRS.units[0]?.unitWord||"part")}</button>${restBanner()}${heroCard(cur,anyDone)}${statsCard()}${togetherCard()}
  <section class="card"><div class="goal"><div class="ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="var(--line)" stroke-width="8"/><circle cx="32" cy="32" r="27" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}"/></svg><span>${tx}/${goal}</span></div>
  <div><h3>${pct>=1?"Daily goal met. Yasher koach!":"Today's goal"}</h3><p>${pct>=1?"Anything more is extra credit.":`${goal-tx} XP to go${S.settings.name?", "+esc(S.settings.name):""}.`}</p></div></div>
  ${anyDone?`<button class="btn ${due?"green":"ghost"} block review-btn" id="review">${I.repeat} ${due?`Chazarah · ${due} due`:"Practice weak spots"}</button>`:""}</section>

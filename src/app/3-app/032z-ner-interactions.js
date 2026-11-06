@@ -1,4 +1,4 @@
-/* Ner: optional, accessible character interactions. No learner records or IDs are changed. */
+/* Sifri: optional, accessible character interactions. No learner records or IDs are changed. */
 const NER_LINES = {
  home: [
   ["cheer","Yasher koach! Every little step counts."],
@@ -23,7 +23,7 @@ const _nerTapCount={home:0,feedback:0,finish:0};
 function nerButton(kind,mood){
  const safe=NER_LINES[kind]?kind:"home";
  return `<div class="ner-interactive ner-${safe}">
-  <button type="button" class="ner-tap" data-ner-tap="${safe}" aria-label="Tap Ner for encouragement" title="Tap Ner for encouragement">${ner(mood)}<span class="ner-touch-hint" aria-hidden="true">✦</span></button>
+  <button type="button" class="ner-tap" data-ner-tap="${safe}" aria-label="Tap Sifri for encouragement" title="Tap Sifri for encouragement">${ner(mood)}<span class="ner-touch-hint" aria-hidden="true">✦</span></button>
   <span class="ner-response" data-ner-response role="status" aria-live="polite"></span>
  </div>`;
 }
@@ -43,15 +43,15 @@ document.addEventListener("click",e=>{
  box._nerClear=setTimeout(()=>{box.classList.remove("ner-reacting");text.textContent="";},4100);
 });
 
-/* Persistent corner companion in lessons, practice and tests. */
+/* Sifri's persistent corner companion in lessons, practice and tests. */
 let _nerCompanionTimer=0;
 function nerCompanionMount(){
  const overlay=document.querySelector("#ov");if(!overlay)return null;
  let dock=document.querySelector("#ner-companion");
  if(!dock){
   dock=document.createElement("aside");dock.id="ner-companion";dock.className="ner-companion";
-  dock.setAttribute("aria-label","Ner learning companion");
-  dock.innerHTML=`<button type="button" class="ner-companion-button" aria-label="Give Ner a high five" title="Give Ner a high five"><span class="ner-companion-character">${ner("happy")}</span><span class="ner-companion-spark" aria-hidden="true">✦</span></button><span class="ner-companion-bubble" role="status" aria-live="polite"></span><span class="ner-companion-meter" aria-hidden="true"><span></span></span>`;
+  dock.setAttribute("aria-label","Sifri learning companion");
+  dock.innerHTML=`<button type="button" class="ner-companion-button" aria-label="Give Sifri a high five" title="Give Sifri a high five"><span class="ner-companion-character">${ner("happy")}</span><span class="ner-companion-spark" aria-hidden="true">✦</span></button><span class="ner-companion-bubble" role="status" aria-live="polite"></span><span class="ner-companion-meter" aria-hidden="true"><span></span></span>`;
   overlay.appendChild(dock);
   dock.querySelector("button").addEventListener("click",()=>{
    const lines=NER_LINES.feedback,[mood,message]=lines[_nerTapCount.feedback++%lines.length];

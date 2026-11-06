@@ -5,7 +5,7 @@ function coursePct(c){let d=0,t=0;c.units.forEach(u=>{t+=u.nodes.length;d+=u.nod
 /* sign-up: one friendly page. mode "first" = the person opening the app; "add" = a new profile for someone else on this account */
 
 /* sign-in screen for the standalone app (email and password, or Google) */
-function signInView(){if(!LimudAuth.configured){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Almost ready</h1><p class="sub">This site isn't connected to its sign-in service yet. Paste your Firebase settings into <b>firebase-config.js</b> and upload the folder again.</p></div>`;return}let mode="in";const draw=()=>{$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Limud Path</h1><div class="langtop">${langPick()}</div>
+function signInView(){if(!LimudAuth.configured){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Almost ready</h1><p class="sub">This site isn't connected to its sign-in service yet. Paste your Firebase settings into <b>firebase-config.js</b> and upload the folder again.</p></div>`;return}let mode="in";const draw=()=>{$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Masmid</h1><div class="langtop">${langPick()}</div>
  <p class="sub">${mode==="in"?"Sign in to keep learning.":mode==="up"?"Create your account. Each learner gets their own profile and progress.":"We'll email you a link to choose a new password."}</p>
  <form id="authF" class="authf" novalidate>${mode==="up"?`<label class="field" for="aname">Your name<input id="aname" autocomplete="given-name" maxlength="24" placeholder="e.g. Moshe"></label>`:""}
   <label class="field" for="aemail">Email<input id="aemail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com"></label>
@@ -28,7 +28,7 @@ function signUp(mode){const first=mode!=="add";let g=null,skin=1,hair=0,subj=[],
  const cat=()=>catOf({gender:g,age:($("#wage")||{}).value?.trim()||null})||(g==="f"?"girl":"boy");
  const prev=()=>{const el=$("#wav");if(el)el.innerHTML=avatarSVG(avClean({base:cat(),skin,hair}),"","-30 -108 60 112")};
  $("#layer").innerHTML=`<div class="signup" role="dialog" aria-modal="true" aria-label="Create a profile"><div class="su-in wrap">
-  <div class="su-hero">${first?`<span class="he su-bh">ברוכים הבאים</span><h1>Welcome to Limud Path</h1><p>Create your profile to start learning. It takes a minute.</p><div class="langtop">${langPick()}</div>`:`<h1>New profile</h1><p>For someone else learning here. Each profile has its own progress, avatar and town.</p>`}</div>
+  <div class="su-hero">${first?`<span class="he su-bh">ברוכים הבאים</span><h1>Welcome to Masmid</h1><p>Create your profile to start learning. It takes a minute.</p><div class="langtop">${langPick()}</div>`:`<h1>New profile</h1><p>For someone else learning here. Each profile has its own progress, avatar and town.</p>`}</div>
   <div class="su-card"><div class="su-av" id="wav" aria-hidden="true"></div>
    <label class="field" for="wname">${first?"Your name":"Name"}<input type="text" id="wname" maxlength="24" autocomplete="given-name" placeholder="e.g. Moshe or Chaya" value="${first?esc((()=>{try{return localStorage.getItem("limudpath.signupName")||window.LimudAuth?.user?.displayName||""}catch(e){return ""}})()):""}"></label>
    <div class="field">Boy or girl<div class="seg big2" id="wprof"><button data-v="m" aria-pressed="false">Boy</button><button data-v="f" aria-pressed="false">Girl</button></div></div>
@@ -38,7 +38,7 @@ function signUp(mode){const first=mode!=="add";let g=null,skin=1,hair=0,subj=[],
   <div class="su-card"><div class="field">What would you like to learn?<div class="su-subj" id="wsubj">${SUBJECTS.map(s=>`<button data-v="${s.id}" aria-pressed="false" ${s.live?"":"disabled"} style="--c:${s.c}"><svg viewBox="0 0 64 64" aria-hidden="true">${SUBJ_ART[s.id]}</svg><span class="he">${s.he}</span><b>${s.en}</b>${s.live?"":"<small>Coming soon</small>"}</button>`).join("")}</div><small class="small">Pick one or more. You can switch anytime from Home.</small></div>
    <div class="field">Daily goal<div class="seg" id="wgoal">${[[20,"Casual"],[30,"Regular"],[50,"Serious"]].map(([v,n])=>`<button data-v="${v}" aria-pressed="${v===goal}">${n}<small>${v} XP</small></button>`).join("")}</div></div></div>
   <button class="btn block" id="wgo">${first?"Create my profile":"Add profile"}</button>${first?"":`<button class="btn ghost block" id="wback">Cancel</button>`}
-  <p class="small su-note">Your profile and progress are saved to your account, so they're here on any device where you open Limud Path. ${first?"Family members can each get their own profile from Home or Settings.":""}</p></div></div>`;
+  <p class="small su-note">Your profile and progress are saved to your account, so they're here on any device where you open Masmid. ${first?"Family members can each get their own profile from Home or Settings.":""}</p></div></div>`;
  document.body.style.overflow="hidden";prev();
  segBind("#wprof",v=>{g=v;prev()});$("#wage").oninput=prev;segBind("#wgoal",v=>goal=+v);
  const sw=(sel,set)=>document.querySelectorAll(sel+" button").forEach(b=>b.onclick=()=>{document.querySelectorAll(sel+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));set(+b.dataset.v);prev()});
@@ -71,21 +71,12 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
  <section class="h-hi"><button class="h-av" id="hProfile" aria-label="My profile">${avatarSVG(myAvatar(),"","-30 -108 60 112")}</button><div><small>${["Boker tov","Shalom","Erev tov"][new Date().getHours()<12?0:new Date().getHours()<18?1:2]}${name?",":""}</small><h1>${esc(name||"Welcome")}</h1>
   <p>Level ${lv.lv} · ${lv.name} · ${streakNow().short}</p></div>
   <div class="h-ring" aria-label="Today's goal ${tx} of ${goal} XP"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="24" cy="24" r="20" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 24 24)"/></svg><span>${tx}/${goal}</span></div></section>
- <section class="masmid-coach" aria-label="Your learning buddy">
-  <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
-  <div class="masmid-coach-copy">
-   <span class="masmid-coach-label">MEET NER · YOUR LEARNING BUDDY</span>
-   <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
-   <p>${pct>=1?"Today's goal is complete. Keep exploring!":tx>0?"Just "+Math.max(0,goal-tx)+" more XP to reach your daily goal.":"One little lesson is a great place to start."}</p>
-   <div class="masmid-quest"><span aria-hidden="true">✦</span><div><b>Today's mission</b><small>${pct>=1?"Mission complete!":Math.max(0,goal-tx)+" XP until your goal"}</small></div><span class="masmid-quest-pct">${Math.round(pct*100)}%</span></div>
-   <div class="masmid-quest-track" role="progressbar" aria-label="Daily learning goal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct*100)}"><i style="width:${Math.round(pct*100)}%"></i></div>
-  </div>
- </section>
  ${nn?`<section class="h-cont row" style="--c:${(SUBJECTS.find(s=>s.id===cc.id)||{}).c||"var(--blue)"}">
   <div class="h-ct"><span class="h-ic"><svg viewBox="0 0 64 64" aria-hidden="true">${SUBJ_ART[cc.id]||""}</svg></span><small>${coursePct(cc)>0?"Continue":"Start"} · ${esc(cc.chip.t)}</small><h2>${esc(nn.lesson?nn.lesson.title:nn.title)}</h2><p>${esc(cc.units[nx.ui].unit.t)} · ${Math.round(coursePct(cc)*100)}% of the course</p>
   <div class="h-cb"><button class="btn" id="hGo">${coursePct(cc)>0?"Continue":"Start"}</button><button class="btn ghost" data-hpath="${cc.id}">See the path</button></div></div></section>`:""}
  <h2 class="h-sec">Explore</h2>
  <div class="h-tiles">
+  <button class="h-tile" data-index><span>📑</span><b>Index</b><small>Jump to any sefer, perek or siman</small></button>
   <button class="h-tile" id="hGames"><span>🎮</span><b>Games</b><small>Play with what you learned</small></button>
   <button class="h-tile" id="hWorld"><span>🌍</span><b>The whole world</b><small>Every subject as a continent</small></button>
   <button class="h-tile" id="hMap"><span>🗺️</span><b>Map</b><small>${esc(ZEDATA[cc.id]?ZEDATA[cc.id].t:cc.chip.t)}</small></button>
@@ -95,7 +86,17 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
   <button class="h-tile" id="hAvatar"><span>🧑</span><b>My avatar</b><small>Unlock new looks</small></button>
   <button class="h-tile" id="hWho"><span>👪</span><b>Profiles</b><small>${Object.keys(ACC.profiles).length>1?Object.keys(ACC.profiles).length+" on this account":"Add someone in your family"}</small></button>
   <button class="h-tile" id="hSettings"><span>⚙️</span><b>Settings</b><small>Goal, calendar, backup</small></button>
- </div></main>`}
+ </div>
+ <section class="masmid-coach" aria-label="Your learning buddy">
+  <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
+  <div class="masmid-coach-copy">
+   <span class="masmid-coach-label">MEET SIFRI · YOUR LEARNING BUDDY</span>
+   <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
+   <p>${pct>=1?"Today's goal is complete. Keep exploring!":tx>0?"Just "+Math.max(0,goal-tx)+" more XP to reach your daily goal.":"One little lesson is a great place to start."}</p>
+   <div class="masmid-quest"><span aria-hidden="true">✦</span><div><b>Today's mission</b><small>${pct>=1?"Mission complete!":Math.max(0,goal-tx)+" XP until your goal"}</small></div><span class="masmid-quest-pct">${Math.round(pct*100)}%</span></div>
+   <div class="masmid-quest-track" role="progressbar" aria-label="Daily learning goal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct*100)}"><i style="width:${Math.round(pct*100)}%"></i></div>
+  </div>
+ </section></main>`}
 function bindHome(){const go=$("#hGo");if(go)go.onclick=()=>{const cc=COURSES[S.course];setCourse(cc.id);const nx=courseNext(cc);if(nx)openNode(nx.ui,nx.i)};
  document.querySelectorAll("[data-hpath]").forEach(b=>b.onclick=()=>{S.course=b.dataset.hpath;save();tab="learn";render();scrollTo(0,0)});
  document.querySelectorAll("[data-hsubj]").forEach(b=>b.onclick=()=>{const id=b.dataset.hsubj,s=SUBJECTS.find(x=>x.id===id);if(!(s.live&&COURSES[id])){subjectSheet(id);return}S.course=id;save();tab="learn";render();scrollTo(0,0)});
@@ -187,9 +188,9 @@ function regionView(u,ui,cur,anyDone){const W=Object.assign({},worldOf(),(worldO
  const nodes=u.nodes.map((n,i)=>{const st=nodeState(u,i),isCur=!!cur&&cur.ui===ui&&cur.i===i,cls=[n.kind==="review"?"review":"",n.kind==="test"?"test":"",st,isCur?"current":""].join(" ");
   const ic=st==="locked"?I.lock:n.kind==="review"?I.repeat:n.kind==="test"?I.crown:st==="done"?I.check:I.book;
   const stars=S.lessons[n.id]?.stars||0;const title=n.lesson?n.lesson.title:n.title,short=n.lesson?n.lesson.short:n.short;const [x,y]=pts[i];
-  return `<button class="node wnode ${cls}" data-node="${ui}:${i}" style="left:calc(50% + ${x}px);top:${y}px" aria-label="${esc(title)} — ${st}">${isCur?`<span class="start-tag">${anyDone?"Next":"Start"}</span>`:""}<span class="disc">${ic}</span>${isCur?`<span class="buddy wav" style="${x>0?"right":"left"}:calc(100% + 6px)">${avatarSVG(myAvatar())}</span>`:""}${st==="done"&&n.kind==="lesson"?`<span class="stars">${[1,2,3].map(k=>`<span class="${k<=stars?"":"off"}">${I.star}</span>`).join("")}</span>`:""}<span class="lbl">${esc(title)}<small>${esc(short)}</small></span></button>`}).join("");
+  return `<button class="node wnode ${cls}" data-node="${ui}:${i}" style="left:calc(50% + ${x}px);top:${y}px" aria-label="${esc(title)} — ${st}">${isCur?`<span class="start-tag">${anyDone?"Next":"Start"}</span>`:""}<span class="disc">${ic}</span>${isCur?`<span class="buddy wav" style="${x>0?"right":"left"}:calc(100% + 6px)">${avatarSVG(myAvatar())}</span>`:""}${st==="done"&&n.kind==="lesson"?`<span class="stars">${[1,2,3].map(k=>`<span class="${k<=stars?"":"off"}">${I.star}</span>`).join("")}</span>`:""}<span class="lbl">${esc(title)}<small>${nodeCap(n)}</small></span></button>`}).join("");
  const started=p.d>0;
- return `<section class="unit wunit${p.done?" won":""}" id="reg${ui}" style="--wf:${W.flag}"><div><small>${u.unit.s}</small><h2>${u.unit.t}</h2>${CRS.units.length>1&&!started?`<p class="unit-note">Open anytime. You don't need to finish the one before.</p>`:""}
+ return `<section class="unit wunit${p.done?" won":""}" id="reg${ui}" style="--wf:${W.flag}"><div><small>${unitSmall(u,ui)}</small><h2>${u.unit.t}</h2>${CRS.units.length>1&&!started?`<p class="unit-note">Open anytime. You don't need to finish the one before.</p>`:""}
   <div class="wprog"><i style="width:${Math.round(p.f*100)}%"></i></div><p class="unit-note">${p.done?`${W.verb} ✓`:`${p.d} of ${p.n} steps`}${W.note?` · ${esc(W.note)}`:""}</p></div><span class="he">${u.unit.he}</span></section>
  <div class="region" style="height:${H}px"><svg class="terrain" viewBox="-400 0 800 ${H}" width="800" height="${H}" aria-hidden="true">
   <defs><linearGradient id="wg${ui}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${W.ground}"/><stop offset="1" stop-color="${W.ground2}"/></linearGradient></defs>
