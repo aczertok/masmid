@@ -513,3 +513,25 @@ input[type=text],input[type=email],input[type=password]{border:2px solid var(--l
  .home .h-tile{padding:10px;min-height:86px}
 }
 @media(prefers-reduced-motion:reduce){.masmid-coach-art{animation:none}.masmid-quest-track i{transition:none}}
+
+/* Ner taps: larger targets, lively reactions, and a readable optional speech bubble. */
+.ner-interactive{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;min-width:0}
+.ner-tap{display:grid;place-items:center;position:relative;width:100%;min-height:58px;border:0;background:transparent;border-radius:20px;padding:0;cursor:pointer;touch-action:manipulation}
+.ner-tap:focus-visible{outline:3px solid var(--tech);outline-offset:3px}
+.ner-tap .ner{display:block;width:100%;height:auto;max-width:100%;filter:drop-shadow(0 4px 0 rgba(0,0,0,.10))}
+.ner-touch-hint{position:absolute;top:2px;right:0;border-radius:50%;background:var(--gold-soft);color:var(--gold-deep);font-size:15px;line-height:1;padding:5px;border:1px solid var(--gold);box-shadow:0 2px 0 rgba(0,0,0,.07);pointer-events:none}
+.ner-response{position:absolute;z-index:4;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);min-width:130px;max-width:min(240px,78vw);width:max-content;box-sizing:border-box;padding:9px 12px;border-radius:16px;background:var(--surface);border:2px solid var(--karti);box-shadow:0 4px 12px rgba(0,0,0,.15);color:var(--ink);text-align:center;font-size:12px;font-weight:700;line-height:1.35;white-space:normal}
+.ner-response:empty{display:none}
+.ner-reacting .ner-tap{animation:nerTapJump .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes nerTapJump{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-13px) rotate(-8deg)}65%{transform:translateY(-4px) rotate(7deg)}}
+.masmid-coach-art .ner-interactive{width:100%}
+.masmid-coach-art .ner-tap{min-height:88px}
+.masmid-coach-art .ner-response{bottom:calc(100% + 5px);left:55%;max-width:200px}
+.fbrow .ner-interactive{width:66px;align-self:flex-start}
+.fbrow .ner-interactive .ner{width:58px}
+.fbrow .ner-response{bottom:calc(100% + 2px);left:48px;transform:translateX(-35%);max-width:205px}
+.endwrap>.ner-interactive{width:150px;margin-inline:auto}
+.endwrap>.ner-interactive .ner{max-height:180px}
+.endwrap>.ner-interactive .ner-response{left:50%}
+@media(max-width:390px){.fbrow .ner-interactive{width:55px}.fbrow .ner-interactive .ner{width:50px}.masmid-coach-art .ner-tap{min-height:70px}.ner-response{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.ner-reacting .ner-tap{animation:none!important}}
