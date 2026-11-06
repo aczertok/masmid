@@ -76,6 +76,7 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
   <div class="h-cb"><button class="btn" id="hGo">${coursePct(cc)>0?"Continue":"Start"}</button><button class="btn ghost" data-hpath="${cc.id}">See the path</button></div></div></section>`:""}
  <h2 class="h-sec">Explore</h2>
  <div class="h-tiles">
+  <button class="h-tile" data-index><span>📑</span><b>Index</b><small>Jump to any sefer, perek or siman</small></button>
   <button class="h-tile" id="hGames"><span>🎮</span><b>Games</b><small>Play with what you learned</small></button>
   <button class="h-tile" id="hWorld"><span>🌍</span><b>The whole world</b><small>Every subject as a continent</small></button>
   <button class="h-tile" id="hMap"><span>🗺️</span><b>Map</b><small>${esc(ZEDATA[cc.id]?ZEDATA[cc.id].t:cc.chip.t)}</small></button>
