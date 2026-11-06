@@ -32,6 +32,8 @@ document.addEventListener("click",e=>{
  const kind=btn.dataset.nerTap,lines=NER_LINES[kind];if(!lines)return;
  const entry=lines[_nerTapCount[kind]++%lines.length],box=btn.closest(".ner-interactive"),text=box?.querySelector("[data-ner-response]");
  if(!box||!text)return;
+ // Home messages belong inside the card content, where they can wrap instead of being clipped.
+ if(kind==="home"){const copy=box.closest(".masmid-coach")?.querySelector(".masmid-coach-copy");if(copy&&text.parentElement!==copy)copy.appendChild(text)}
  const reduce=window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
  btn.innerHTML=ner(entry[0])+'<span class="ner-touch-hint" aria-hidden="true">✦</span>';
  box.classList.remove("ner-reacting");
