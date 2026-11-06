@@ -12,14 +12,14 @@ function startTest(u){const ids=shuffle(Object.keys(ALLQ).filter(k=>ALLQ[k].unit
 
 function runSteps(run){ltDoing(run.kind==="lesson"?run.lesson.title:run.kind==="review"?"Chazarah":"Test");R=Object.assign(run,{i:0,queue:run.steps.slice(),total:run.steps.length,doneCount:0,correct:0,answered:0,firstTry:{},mistakes:0});
  const l=$("#layer");l.innerHTML=`<div class="overlay" id="ov"><div class="inner"><div class="lhead wrap"><button class="iconbtn" id="quit" aria-label="Quit lesson">${I.x}</button><div class="bar"><i id="pbar" style="width:0%"></i></div><span class="ltchip" id="ltchip" hidden></span><span class="lscore" id="lscore" aria-label="Correct answers">${I.check}0</span></div><div class="lbody wrap" id="lbody"></div><div class="lfoot wrap" id="lfoot"></div></div></div>`;
- document.body.style.overflow="hidden";$("#quit").onclick=quitAsk;refreshLT();showStep()}
+ document.body.style.overflow="hidden";$("#quit").onclick=quitAsk;refreshLT();nerCompanionMount();showStep()}
 function quitAsk(){const f=$("#lfoot");f.className="lfoot wrap";f.innerHTML=`<div class="fb"><b>Leave this lesson?</b><p>You'll lose this lesson's progress.</p></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button class="btn ghost" id="stay">Keep learning</button><button class="btn red" id="leave">Leave</button></div>`;
  $("#stay").onclick=()=>showStep(true);$("#leave").onclick=closeRun}
 function closeRun(){ltDoing("Browsing");R=null;$("#layer").innerHTML="";document.body.style.overflow="";render()}
 function setBar(){$("#pbar").style.width=(R.doneCount/R.total*100)+"%"}
 
 let cur=null; // current question interaction state
-function showStep(keep){setBar();if(!R.queue.length)return finish();const s=R.queue[0];const body=$("#lbody");
+function showStep(keep){setBar();if(!R.queue.length)return finish();const s=R.queue[0];nerCompanionStep(s);const body=$("#lbody");
  if(!keep){body.scrollTop=0;cur={s,sel:null,ans:[],matched:0,err:0,pick:null}}
  const f=$("#lfoot");f.className="lfoot wrap";
  if(s.t==="learn"){body.innerHTML=learnCard(s);f.innerHTML=`<button class="btn block" id="cont">Continue</button>`;bindLearn();$("#cont").onclick=()=>{R.queue.shift();R.doneCount++;showStep()};return}
@@ -118,7 +118,7 @@ function check(s){let ok;if(s.t==="mc"||s.t==="fill")ok=cur.sel===s.a;if(s.t==="
 
 function resolve(s,ok,isMatch){cur.locked=true;document.onkeydown=null;const first=!R.firstTry.hasOwnProperty(s.id);
  if(first){R.firstTry[s.id]=ok;R.answered++;if(ok)R.correct++;else R.mistakes++;grade(s.id,ok);if(R.kind==="review")S.reviewAns++;const sc=$("#lscore");if(sc)sc.innerHTML=I.check+R.correct}
- const f=$("#lfoot");f.className="lfoot wrap "+(ok?"ok":"bad");
+ nerCompanionAnswer(ok);const f=$("#lfoot");f.className="lfoot wrap "+(ok?"ok":"bad");
  const answer=s.t==="tf"?(s.a?"True":"False"):s.t==="order"?s.tiles.join(" "):s.t==="match"?"":s.opts[s.a];
  const praise=["Yasher koach!","Excellent!","Right!","Well done!"][Math.floor(Math.random()*4)];
  f.innerHTML=`<div class="fbrow">${nerButton("feedback",ok?"cheer":"think")}<div class="fb" style="flex:1;min-width:0"><b>${ok?I.check:I.x}${ok?praise:isMatch?"Matched, with a few slips":"Not quite"}</b>${!ok&&answer?`<p>Answer: ${txt(answer)}</p>`:""}${s.ex?`<p>${txt(s.ex)}</p>`:""}</div></div><button class="btn ${ok?"green":"red"} block" id="next">Continue</button>`;
