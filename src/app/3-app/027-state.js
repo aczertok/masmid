@@ -45,5 +45,5 @@ async function exportData(){const data=JSON.stringify({app:"Limud Path",exported
  const dl=window.claude?.use?await claude.use("downloads"):null;
  if(!dl){toast("Downloading isn't available in this view");return}
  try{await dl.save({filename:`limud-backup-${today()}.json`,data});toast("Backup saved")}catch(e){if(e&&e.code!=="declined")toast("The backup couldn't be saved here")}}
-function importData(file){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);const acc=o.account||o;if(!acc.profiles)throw 0;ACC=normAcc(acc);S=curP().data;save();closeSheet();render();toast("Your progress was restored")}catch(e){toast("That file isn't a Limud backup")}};r.readAsText(file)}
+function importData(file){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);const acc=o.account||o;if(!acc.profiles)throw 0;ACC=normAcc(acc);S=curP().data;save();closeSheet();render();toast("Your progress was restored")}catch(e){toast("That file isn't a Masmid backup")}};r.readAsText(file)}
 

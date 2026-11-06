@@ -5,7 +5,7 @@ function coursePct(c){let d=0,t=0;c.units.forEach(u=>{t+=u.nodes.length;d+=u.nod
 /* sign-up: one friendly page. mode "first" = the person opening the app; "add" = a new profile for someone else on this account */
 
 /* sign-in screen for the standalone app (email and password, or Google) */
-function signInView(){if(!LimudAuth.configured){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Almost ready</h1><p class="sub">This site isn't connected to its sign-in service yet. Paste your Firebase settings into <b>firebase-config.js</b> and upload the folder again.</p></div>`;return}let mode="in";const draw=()=>{$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Limud Path</h1><div class="langtop">${langPick()}</div>
+function signInView(){if(!LimudAuth.configured){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Almost ready</h1><p class="sub">This site isn't connected to its sign-in service yet. Paste your Firebase settings into <b>firebase-config.js</b> and upload the folder again.</p></div>`;return}let mode="in";const draw=()=>{$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Masmid</h1><div class="langtop">${langPick()}</div>
  <p class="sub">${mode==="in"?"Sign in to keep learning.":mode==="up"?"Create your account. Each learner gets their own profile and progress.":"We'll email you a link to choose a new password."}</p>
  <form id="authF" class="authf" novalidate>${mode==="up"?`<label class="field" for="aname">Your name<input id="aname" autocomplete="given-name" maxlength="24" placeholder="e.g. Moshe"></label>`:""}
   <label class="field" for="aemail">Email<input id="aemail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com"></label>
@@ -28,7 +28,7 @@ function signUp(mode){const first=mode!=="add";let g=null,skin=1,hair=0,subj=[],
  const cat=()=>catOf({gender:g,age:($("#wage")||{}).value?.trim()||null})||(g==="f"?"girl":"boy");
  const prev=()=>{const el=$("#wav");if(el)el.innerHTML=avatarSVG(avClean({base:cat(),skin,hair}),"","-30 -108 60 112")};
  $("#layer").innerHTML=`<div class="signup" role="dialog" aria-modal="true" aria-label="Create a profile"><div class="su-in wrap">
-  <div class="su-hero">${first?`<span class="he su-bh">ברוכים הבאים</span><h1>Welcome to Limud Path</h1><p>Create your profile to start learning. It takes a minute.</p><div class="langtop">${langPick()}</div>`:`<h1>New profile</h1><p>For someone else learning here. Each profile has its own progress, avatar and town.</p>`}</div>
+  <div class="su-hero">${first?`<span class="he su-bh">ברוכים הבאים</span><h1>Welcome to Masmid</h1><p>Create your profile to start learning. It takes a minute.</p><div class="langtop">${langPick()}</div>`:`<h1>New profile</h1><p>For someone else learning here. Each profile has its own progress, avatar and town.</p>`}</div>
   <div class="su-card"><div class="su-av" id="wav" aria-hidden="true"></div>
    <label class="field" for="wname">${first?"Your name":"Name"}<input type="text" id="wname" maxlength="24" autocomplete="given-name" placeholder="e.g. Moshe or Chaya" value="${first?esc((()=>{try{return localStorage.getItem("limudpath.signupName")||window.LimudAuth?.user?.displayName||""}catch(e){return ""}})()):""}"></label>
    <div class="field">Boy or girl<div class="seg big2" id="wprof"><button data-v="m" aria-pressed="false">Boy</button><button data-v="f" aria-pressed="false">Girl</button></div></div>
@@ -38,7 +38,7 @@ function signUp(mode){const first=mode!=="add";let g=null,skin=1,hair=0,subj=[],
   <div class="su-card"><div class="field">What would you like to learn?<div class="su-subj" id="wsubj">${SUBJECTS.map(s=>`<button data-v="${s.id}" aria-pressed="false" ${s.live?"":"disabled"} style="--c:${s.c}"><svg viewBox="0 0 64 64" aria-hidden="true">${SUBJ_ART[s.id]}</svg><span class="he">${s.he}</span><b>${s.en}</b>${s.live?"":"<small>Coming soon</small>"}</button>`).join("")}</div><small class="small">Pick one or more. You can switch anytime from Home.</small></div>
    <div class="field">Daily goal<div class="seg" id="wgoal">${[[20,"Casual"],[30,"Regular"],[50,"Serious"]].map(([v,n])=>`<button data-v="${v}" aria-pressed="${v===goal}">${n}<small>${v} XP</small></button>`).join("")}</div></div></div>
   <button class="btn block" id="wgo">${first?"Create my profile":"Add profile"}</button>${first?"":`<button class="btn ghost block" id="wback">Cancel</button>`}
-  <p class="small su-note">Your profile and progress are saved to your account, so they're here on any device where you open Limud Path. ${first?"Family members can each get their own profile from Home or Settings.":""}</p></div></div>`;
+  <p class="small su-note">Your profile and progress are saved to your account, so they're here on any device where you open Masmid. ${first?"Family members can each get their own profile from Home or Settings.":""}</p></div></div>`;
  document.body.style.overflow="hidden";prev();
  segBind("#wprof",v=>{g=v;prev()});$("#wage").oninput=prev;segBind("#wgoal",v=>goal=+v);
  const sw=(sel,set)=>document.querySelectorAll(sel+" button").forEach(b=>b.onclick=()=>{document.querySelectorAll(sel+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));set(+b.dataset.v);prev()});

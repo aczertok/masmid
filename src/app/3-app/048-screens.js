@@ -6,9 +6,9 @@ let tab="home";
 .lh-prev{display:block;margin:0 auto}.hero .hero-scene[hidden]{display:none}.hero.compact .hero-b{padding-top:14px}
 .h-cont.row .h-ct{display:grid;grid-template-columns:auto 1fr;column-gap:12px}.h-ic{grid-row:1/5;width:56px;height:56px;border-radius:16px;background:color-mix(in srgb,var(--c) 14%,#fff);display:grid;place-items:center}.h-ic svg{width:42px;height:42px}.h-cont.row .h-cb{grid-column:1/-1;margin-top:4px}`;document.head.appendChild(st)})();
 function render(){try{if(S&&S.badges)evalBadges(id=>{S.badges[id]=today()})}catch(e){}try{if(AUTH==="in"&&window.LimudSocial&&profile())socStart()}catch(e){}const nav=document.querySelector("nav.tabs");if(nav)nav.hidden=AUTH==="pending"||AUTH==="out";
- if(AUTH==="pending"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Limud Path</h1><p class="sub">Signing you in…</p><span class="gate-spin"></span></div>`;return}
+ if(AUTH==="pending"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Masmid</h1><p class="sub">Signing you in…</p><span class="gate-spin"></span></div>`;return}
  if(AUTH==="out"&&window.LimudAuth){signInView();return}
- if(AUTH==="out"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">לימוד</span><h1>Limud Path</h1><p>Welcome!</p>
+ if(AUTH==="out"){$("#app").innerHTML=`<div class="gate"><span class="he gate-he">מתמיד</span><h1>Masmid</h1><p>Welcome!</p>
   <p class="sub">You're not signed in here, so your progress can't be saved to an account. You can still learn: your profile is kept on this device.</p>
   <div class="langtop">${langPick()}</div><button class="btn block" id="gateLocal">Start learning on this device</button><p class="small">Your profile and progress are saved on this phone or computer.</p><button class="linkbtn" id="gateRe">I'm signed in to Claude — try again</button></div>`;$("#gateRe").onclick=()=>location.reload();$("#gateLocal").onclick=()=>{try{localStorage.setItem(KEY2+".local","1")}catch(e){}AUTH="local";render()};return}
  setCourse(S.course);document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===tab?"page":"false"));
