@@ -466,3 +466,50 @@ input[type=text],input[type=email],input[type=password]{border:2px solid var(--l
 .spin{animation:spin 20s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .bob{animation:bob 1.8s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+/* Masmid welcome refresh: gentle game-like hierarchy without changing saved progress. */
+.home{gap:16px}
+.home .h-hi{border-radius:24px;background:linear-gradient(135deg,var(--surface) 65%,var(--tech-soft));box-shadow:0 5px 0 rgba(22,33,58,.045)}
+.home .h-hi h1{letter-spacing:-.025em}
+.masmid-coach{display:grid;grid-template-columns:104px minmax(0,1fr);gap:10px;align-items:center;border:2px solid #C7E4C2;border-radius:24px;background:linear-gradient(135deg,#F2FFE9,#E6F6D7 55%,#F8FCEB);color:#233D26;padding:16px 14px;position:relative;overflow:hidden;box-shadow:0 5px 0 rgba(54,112,44,.10)}
+.masmid-coach:before{content:"";position:absolute;width:150px;height:150px;border:2px dashed rgba(80,143,67,.12);border-radius:50%;left:-30px;top:-55px;pointer-events:none}
+.masmid-coach-art{position:relative;align-self:center;justify-self:center;width:95px;max-width:100%;filter:drop-shadow(0 7px 3px rgba(49,94,42,.16));animation:masmid-wiggle 4.5s ease-in-out infinite}
+.masmid-coach-art .ner{width:100%;height:auto;display:block}
+.masmid-coach-copy{position:relative;min-width:0}
+.masmid-coach-label{display:block;font-size:10px;font-weight:800;letter-spacing:.075em;color:#467F39}
+.masmid-coach h2{font-size:19px;line-height:1.2;letter-spacing:-.025em;margin:5px 0 5px;text-wrap:balance}
+.masmid-coach p{margin:0 0 11px;font-size:12.5px;line-height:1.45;color:#466248}
+.masmid-quest{display:flex;gap:7px;align-items:center}
+.masmid-quest>span:first-child{font-size:18px;color:#D39B15}
+.masmid-quest div{flex:1;min-width:0}
+.masmid-quest b,.masmid-quest small{display:block;line-height:1.25}
+.masmid-quest b{font-size:12px}
+.masmid-quest small{font-size:11px;color:#59745B;margin-top:1px}
+.masmid-quest-pct{font-size:12px;font-weight:800;color:#2F7133}
+.masmid-quest-track{height:10px;margin-top:9px;border-radius:999px;background:#D1E8C4;overflow:hidden;border:1px solid rgba(44,116,48,.1)}
+.masmid-quest-track i{display:block;height:100%;background:linear-gradient(90deg,#72BE49,#3B923C);border-radius:999px;transition:width .3s ease}
+.home .h-cont{border-radius:23px;border-color:var(--tech);box-shadow:0 5px 0 color-mix(in srgb,var(--tech) 18%,transparent)}
+.home .h-cont .h-ct{padding:17px}
+.home .h-cont .h-ct h2{font-size:21px;line-height:1.25;letter-spacing:-.025em}
+.home .h-cont .h-cb{margin-top:10px}
+.home .h-cont .h-cb .btn:first-child{background:var(--karti);box-shadow:0 4px 0 var(--karti-deep)}
+.home .h-sec{font-size:19px;letter-spacing:-.02em}
+.home .h-tile{border-radius:19px;min-height:88px;padding:13px;transition:transform .12s ease,border-color .12s ease}
+.home .h-tile:active{transform:scale(.98)}
+.home .h-tile:focus-visible{outline-offset:3px}
+.home .h-tile span{font-size:28px}
+.home .h-tile b{font-size:14px;line-height:1.25}
+.home .h-tile small{font-size:11.5px;line-height:1.25}
+@keyframes masmid-wiggle{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(3deg) translateY(-5px)}}
+@media(max-width:390px){
+ .masmid-coach{grid-template-columns:76px minmax(0,1fr);padding:12px 10px;gap:8px}
+ .masmid-coach-art{width:74px}
+ .masmid-coach h2{font-size:17px}
+ .masmid-coach p{font-size:12px}
+ .home .h-cont .h-ct{padding:13px}
+ .home .h-cont .h-cb{flex-wrap:wrap}
+ .home .h-cont .h-cb .btn{min-width:112px}
+ .home .h-tile{padding:10px;min-height:86px}
+}
+@media(prefers-reduced-motion:reduce){.masmid-coach-art{animation:none}.masmid-quest-track i{transition:none}}
