@@ -13,7 +13,7 @@ function finish(){if(R.kind==="lesson")ltFinished(R.lesson.title);const acc=R.an
  const goalHit=S.daily[t]>=S.settings.goal&&S.daily[t]-xp<S.settings.goal;
  const siyum=R.kind==="test"&&passed;
  $("#pbar").style.width="100%";
- $("#lbody").innerHTML=`<div class="endwrap">${siyum?`<div class="siyum-art">${scene("siyum")}</div>${R.unit.siyumHTML}`:R.kind==="test"?`${nerButton("finish","think")}<h2 style="color:var(--ink)">Almost there</h2><p class="sub">You need 80% to finish the ${R.unit.unitWord}. Review and try again.</p>`:`${ner("cheer")}<h2>${R.kind==="review"?"Chazarah complete!":"Lesson complete!"}</h2>`}
+ $("#lbody").innerHTML=`<div class="endwrap">${siyum?`<div class="siyum-art">${scene("siyum")}</div>${R.unit.siyumHTML}`:R.kind==="test"?`${nerButton("finish","think")}<h2 style="color:var(--ink)">Almost there</h2><p class="sub">You need 80% to finish the ${R.unit.unitWord}. Review and try again.</p>`:`${nerButton("finish","cheer")}<h2>${R.kind==="review"?"Chazarah complete!":"Lesson complete!"}</h2>`}
  <div class="tiles3"><div class="et" style="--c:var(--gold)"><div>XP</div><b>+${xp}</b></div><div class="et" style="--c:var(--karti)"><div>Accuracy</div><b>${acc}%</b></div><div class="et" style="--c:var(--gold-deep)"><div>Streak</div><b>${S.settings.streakMode==="week"?weekStreakInfo().n+"w":st.n+(st.n>before?" ↑":"")}</b></div></div>
  ${goalHit?`<p class="sub"><b>Daily goal met.</b></p>`:""}
  ${earned.length?`<p class="sec-h">New badge${earned.length>1?"s":""}</p><div class="newbadges">${earned.map(b=>`<span>${esc(b)}</span>`).join("")}</div>`:""}</div>`;
