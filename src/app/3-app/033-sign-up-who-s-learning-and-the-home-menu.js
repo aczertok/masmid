@@ -72,7 +72,7 @@ function homeView(){const lv=levelOf(S.xp),st=streakInfo(),tx=S.daily[today()]||
   <p>Level ${lv.lv} · ${lv.name} · ${streakNow().short}</p></div>
   <div class="h-ring" aria-label="Today's goal ${tx} of ${goal} XP"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="24" cy="24" r="20" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 24 24)"/></svg><span>${tx}/${goal}</span></div></section>
  <section class="masmid-coach" aria-label="Your learning buddy">
-  <div class="masmid-coach-art" aria-hidden="true">${ner(pct>=1?"cheer":"happy")}</div>
+  <div class="masmid-coach-art">${nerButton("home",pct>=1?"cheer":"happy")}</div>
   <div class="masmid-coach-copy">
    <span class="masmid-coach-label">MEET NER · YOUR LEARNING BUDDY</span>
    <h2>${pct>=1?"Yasher koach! You did it!":tx>0?"You're on a roll!":"Ready for a Torah adventure?"}</h2>
